@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>dOd — ask your data, where it lives</title>
-<meta name="description" content="dOd is an AI-native analytics engine: ask in plain English, and agents plan a job that runs on your data, inside your network, with an embedded model.">
-<meta property="og:title" content="dOd — ask your data, where it lives">
-<meta property="og:description" content="AI agents that plan, an engine that runs, and a model embedded in both — inside your VPC.">
+<title>dOd — the agent-native distributed engine</title>
+<meta name="description" content="dOd is the agent-native distributed engine: AI agents with an in-memory LLM read, optimize and execute jobs on your data, in parallel, inside your network.">
+<meta property="og:title" content="dOd — the agent-native distributed engine">
+<meta property="og:description" content="Agents read, optimize and execute. An in-memory LLM, execution in milliseconds, and nothing leaves your VPC.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230E1320'/%3E%3Ccircle cx='32' cy='32' r='13' fill='none' stroke='%237FA0FF' stroke-width='6'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -167,18 +167,18 @@
 <main id="top">
   <section class="hero">
     <div class="wrap">
-      <div class="eyebrow">The AI-native analytics engine</div>
-      <h1>Ask your data. <span>It answers where it lives.</span></h1>
-      <p class="lead">dOd turns plain-English questions into validated jobs and runs them on a distributed engine — over BigQuery, cloud storage and SQL databases. AI agents plan on the driver and on every worker, with a model embedded in the engine. Nothing leaves your network.</p>
+      <div class="eyebrow">The agent-native distributed engine</div>
+      <h1>Agents that read, optimize and execute. <span>At engine speed.</span></h1>
+      <p class="lead">dOd is a distributed data engine run by AI agents. An LLM embedded in memory — not behind an API — reads your question and your data, plans the job, and hands it to agents on every worker, which optimize it for the data they hold. Execution takes milliseconds, and nothing leaves your network.</p>
       <div class="ctas">
-        <a class="btn primary" href="#demo">See it answer</a>
+        <a class="btn primary" href="#demo">See the agents work</a>
         <a class="btn ghost" data-contact href="#contact">Book a demo on your data</a>
       </div>
       <div class="pillrow" aria-label="highlights">
-        <span class="pill">no SQL generated</span>
-        <span class="pill">embedded 1B model</span>
+        <span class="pill">LLM in memory · ~90 ms to first token</span>
         <span class="pill">agents on every worker</span>
-        <span class="pill">runs in your VPC</span>
+        <span class="pill">executes in milliseconds</span>
+        <span class="pill">0 bytes leave your VPC</span>
       </div>
     </div>
   </section>
@@ -186,7 +186,7 @@
   <section class="demo" id="demo">
     <div class="wrap">
       <div class="eyebrow">A real run, replayed</div>
-      <h2>Five questions, one notebook</h2>
+      <h2>Watch the agents answer</h2>
       <p class="sub">Pick a question. Each answer below was produced by dOd — the embedded Gemma 3 1B model and two executor processes — on synthetic sample data, and is replayed here as it came back. The timings shown are the real ones.</p>
 
       <div class="chips" role="group" aria-label="example questions" id="chips"></div>
@@ -203,13 +203,13 @@
   <section id="how">
     <div class="wrap">
       <div class="eyebrow">The technology</div>
-      <h2>The model decides what to compute. The engine computes it.</h2>
-      <p class="sub">A language model is six orders of magnitude slower than an engine, so it never touches the data. It writes a plan — a small, checkable JSON job — and the engine runs it at full speed.</p>
+      <h2>Read. Optimize. Execute.</h2>
+      <p class="sub">A language model is six orders of magnitude slower than an engine, so in dOd it never processes records. It thinks in plans — small, checkable jobs — and agents on every layer turn them into execution at full engine speed, in memory.</p>
       <div class="steps">
-        <div class="step"><div class="k">01 · ASK</div><h3>Plain English</h3><p>In a notebook, with suggestions from your own columns — or as JSON from any AI agent.</p><div class="where">notebook · API</div></div>
-        <div class="step"><div class="k">02 · ROUTE</div><h3>The right layer answers</h3><p>Schema, size and source questions are answered instantly from metadata. Only real data questions become a job.</p><div class="where">driver · router agent</div></div>
-        <div class="step"><div class="k">03 · PLAN</div><h3>A job, checked twice</h3><p>The planner writes a plan; the engine validates it, then checks it against your question — no invented filters, the right column, the rows you asked for.</p><div class="where">driver · planner agent</div></div>
-        <div class="step"><div class="k">04 · RUN</div><h3>Agents on every worker</h3><p>The job runs in parallel partitions. Each worker's own agent adapts the plan to the data it holds.</p><div class="where">executors · worker agents</div></div>
+        <div class="step"><div class="k">01 · READ</div><h3>Agents read the question and the data</h3><p>Schema, size and source are answered straight from metadata. Only real data questions become a job.</p><div class="where">driver · router agent</div></div>
+        <div class="step"><div class="k">02 · PLAN</div><h3>A job, checked twice</h3><p>The planner writes a plan; the engine validates it and checks it against your question — no invented filters, the right columns, the rows you asked for.</p><div class="where">driver · planner agent</div></div>
+        <div class="step"><div class="k">03 · OPTIMIZE</div><h3>Every worker adapts it</h3><p>Each worker's own agent reads the data it holds and picks the filter that fits it — one plan, tuned per partition.</p><div class="where">executors · worker agents</div></div>
+        <div class="step"><div class="k">04 · EXECUTE</div><h3>In parallel, in milliseconds</h3><p>The engine runs the job in memory across partitions: 60,000 records in 23 ms in the demo above.</p><div class="where">executors · engine</div></div>
       </div>
     </div>
   </section>
@@ -217,15 +217,15 @@
   <section id="why" style="padding-top: 0">
     <div class="wrap">
       <div class="eyebrow">Why dOd</div>
-      <h2>Built for data that can't leave</h2>
-      <p class="sub">Five reasons teams choose an engine that answers inside their own network.</p>
+      <h2>Agents built into the engine, not bolted on</h2>
+      <p class="sub">Most AI data tools put a chatbot in front of a warehouse and translate English into SQL. dOd puts the agents inside the engine — on the driver and on every worker.</p>
       <div class="why">
-        <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg><h3>Keep the data where it is</h3><p>Reads BigQuery, Cloud Storage, S3 and SQL databases in place. No copies, no new warehouse, no pipeline.</p></div>
+        <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M15 20c0-2.3 1-4 3-4.5"/></svg><h3>Agents on every layer</h3><p>A router and a planner on the driver; an agent on every worker that optimizes the job for the data it holds.</p></div>
+        <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg><h3>LLM in memory</h3><p>The model runs inside the engine process — ~90 ms to first token, no API round-trips, no token bills.</p></div>
         <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9l-4 3 4 3"/><path d="M16 9l4 3-4 3"/><path d="M13 5l-2 14"/></svg><h3>No SQL translation</h3><p>Questions become validated execution plans, not generated SQL. Every answer comes with the plan behind it.</p></div>
-        <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M15 20c0-2.3 1-4 3-4.5"/></svg><h3>Native AI agents</h3><p>Agents on both layers: the driver routes and plans the job; each worker builds its own plan for the data it holds.</p></div>
-        <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg><h3>Embedded model, low latency</h3><p>A 1B-parameter model runs inside the engine, not behind an API. No round-trips, no token bills.</p></div>
-        <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><h3>Never leaves your VPC</h3><p>Model, driver and executors run in your network. No prompts or rows are sent to a third-party AI service.</p></div>
-        <div class="card stat"><div class="big">6.0s</div><p>to count a 345,170-row BigQuery table, read in parallel across executors — about 20× faster than one stream.</p></div>
+        <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg><h3>Your data stays put</h3><p>Reads BigQuery, Cloud Storage, S3 and SQL databases in place. No copies, no new warehouse, no pipeline.</p></div>
+        <div class="card"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><h3>Never leaves your VPC</h3><p>Model, driver and executors all run in your network. Zero prompts or rows go to a third-party AI service.</p></div>
+        <div class="card stat"><div class="big">~20×</div><p>faster BigQuery reads: agents split a table into row ranges and every worker reads its own, in parallel.</p></div>
       </div>
     </div>
   </section>
@@ -233,10 +233,10 @@
   <section style="padding-top: 0">
     <div class="wrap">
       <div class="numbers">
-        <div><div class="big">&lt;1s</div><p>for schema and metadata answers, with no records read</p></div>
-        <div><div class="big">15/16</div><p>questions routed to the right layer by a 1B model</p></div>
-        <div><div class="big">1B</div><p>parameters: small enough to embed in every worker</p></div>
-        <div><div class="big">0</div><p>rows or prompts sent to an external AI service</p></div>
+        <div><div class="big">23 ms</div><p>to execute a plan over 60,000 records</p></div>
+        <div><div class="big">~90 ms</div><p>to first token from the in-memory LLM</p></div>
+        <div><div class="big">~8M</div><p>records per second, per core, through the engine</p></div>
+        <div><div class="big">0 bytes</div><p>of your data or prompts sent to an external AI service</p></div>
       </div>
     </div>
   </section>
@@ -244,7 +244,7 @@
   <section class="cta" id="contact">
     <div class="wrap">
       <div class="eyebrow">Next step</div>
-      <h2>See it answer questions about your data</h2>
+      <h2>Put agents on your data</h2>
       <p>A 30-minute session on a dataset you choose — BigQuery, a bucket or a database — running inside your environment.</p>
       <a class="btn primary" data-contact href="#contact">Book a demo</a>
     </div>
@@ -252,7 +252,7 @@
 </main>
 
 <footer>
-  <div class="wrap"><span>© <span id="year"></span> dOd · d0d.ai</span><span>Ask your data. It answers where it lives.</span></div>
+  <div class="wrap"><span>© <span id="year"></span> dOd · d0d.ai</span><span>The agent-native distributed engine.</span></div>
 </footer>
 
 <script>
@@ -306,7 +306,7 @@ async function play(ex) {
     status.append(el("span", "badge data", "agent.plan · ran on 2 executors"), el("span", "", fmt(d.total) + " rows · " + secs(d.ms)));
   } else {
     status.append(el("span", "badge data", "plan · ran on the executors"),
-      el("span", "", "planned " + secs(m.planning_ms) + " · ran " + secs(m.execution_ms) + " · " + d.partitions + " partitions" +
+      el("span", "", "executed in " + secs(m.execution_ms) + " · " + d.partitions + " partitions · planned in " + secs(m.planning_ms) +
         (m.rejected ? " · " + m.rejected + " plan" + (m.rejected > 1 ? "s" : "") + " corrected" : "")));
   }
 
