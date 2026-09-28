@@ -2,9 +2,8 @@
 
 The landing page for dOd, served by GitHub Pages at https://d0d.ai.
 
-One static file, `index.html`, no build step. The demo on it replays a real
-run of dOd — the dOd engine model and two executor processes — on
-synthetic sample data.
+One static file, `index.html`, no build step. dOd is in stealth mode, so the
+page is a single holding screen.
 
-To change where "Book a demo" goes, edit `CONTACT` near the top of the
-script in `index.html`.
+The full product site (demo, how it works, why dOd) lives on the `full-site`
+branch. To bring it back, merge that branch into `main`.
