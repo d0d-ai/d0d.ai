@@ -35,19 +35,118 @@
   a.mail:hover { color: var(--accent); }
   footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
   footer .wrap { padding-top: 20px; padding-bottom: 20px; }
+
+  .grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 56px; align-items: center; padding: 56px 24px; }
+  @media (max-width: 960px) { .grid { grid-template-columns: minmax(0, 1fr); gap: 40px; } }
+
+  .chat { background: #141A2A; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  .chat-top { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--line);
+              font: 500 12px "JetBrains Mono", monospace; color: var(--muted); }
+  .chat-top i { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+  .chat-top span { margin-left: auto; letter-spacing: .08em; text-transform: uppercase; }
+  .chat-body { height: 440px; padding: 18px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
+  .msg { max-width: 88%; padding: 10px 14px; border-radius: 14px; font-size: 15px; line-height: 1.5; animation: in .3s ease-out; }
+  .msg.you { align-self: flex-end; background: #2F4FD8; color: #fff; border-bottom-right-radius: 4px; }
+  .msg.dod { align-self: flex-start; background: #1A2236; border: 1px solid var(--line); border-bottom-left-radius: 4px; width: 88%; }
+  @keyframes in { from { opacity: 0; transform: translateY(6px); } }
+
+  .srcs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .src { font: 500 11.5px "JetBrains Mono", monospace; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; transition: .3s; }
+  .src.on { color: var(--fg); border-color: var(--accent); box-shadow: 0 0 0 3px rgba(127,160,255,.12); }
+  .flow { list-style: none; margin: 0; padding: 0; font: 13px/1.45 "JetBrains Mono", monospace; color: var(--soft); }
+  .flow li { position: relative; padding: 0 0 10px 22px; animation: in .3s ease-out; }
+  .flow li::before { content: ""; position: absolute; left: 3px; top: 5px; width: 8px; height: 8px; border-radius: 50%;
+                     background: var(--accent); animation: pulse 1s ease-in-out infinite; }
+  .flow li:not(:last-child)::after { content: ""; position: absolute; left: 6px; top: 16px; bottom: 0; width: 2px;
+                     background: linear-gradient(var(--accent) 50%, transparent 0) 0 0 / 2px 8px; animation: stream .6s linear infinite; }
+  .flow li.done::before { background: var(--good); animation: none; }
+  .flow li b { color: var(--fg); font-weight: 500; }
+  @keyframes stream { to { background-position: 0 8px; } }
+  .answer { margin-top: 4px; padding-top: 12px; border-top: 1px solid var(--line); animation: in .3s ease-out; }
+  .answer .lead { color: var(--fg); margin-bottom: 10px; }
+  .bar { display: grid; grid-template-columns: 84px 1fr 40px; align-items: center; gap: 10px; font: 12px "JetBrains Mono", monospace; color: var(--soft); margin-top: 6px; }
+  .bar div { height: 8px; border-radius: 4px; background: #34528A; }
+  .bar div span { display: block; height: 100%; border-radius: 4px; background: var(--accent); width: 0; transition: width .8s ease-out; }
+  .typing::after { content: "▍"; animation: pulse 1s steps(1) infinite; }
+  @media (prefers-reduced-motion: reduce) { .msg, .flow li, .answer { animation: none; } .flow li::before, .flow li::after { animation: none; } }
 </style>
 </head>
 <body>
 <header><div class="wrap"><span class="logo" aria-label="dOd">d<b>O</b>d</span></div></header>
 <main>
-  <div class="wrap">
-    <div class="eyebrow">In stealth mode</div>
-    <h1>We're building the next <span>BIG</span> analytics platform.</h1>
-    <p>We're heads down and not saying much yet. Want to hear first when we do?</p>
-    <a class="mail" href="mailto:hello@d0d.ai">hello@d0d.ai</a>
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow">In stealth mode</div>
+      <h1>We're building the next <span>BIG</span> analytics platform.</h1>
+      <p>We're heads down and not saying much yet. Want to hear first when we do?</p>
+      <a class="mail" href="mailto:hello@d0d.ai">hello@d0d.ai</a>
+    </div>
+    <div class="chat" aria-label="Simulated chat showing how a question flows through your data">
+      <div class="chat-top"><i></i><i></i><i></i>&nbsp;dOd<span>Simulated</span></div>
+      <div class="chat-body" id="chat" aria-live="polite"></div>
+    </div>
   </div>
 </main>
 <footer><div class="wrap">© <span id="year"></span> dOd · d0d.ai</div></footer>
-<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+
+// Simulated conversations. Illustrative only, not real data.
+const CONVOS = [
+  { q: "Which region grew fastest last quarter?",
+    sources: ["s3://sales/*.parquet", "postgres · orders", "crm.csv"],
+    steps: ["reading <b>3 sources</b> in place · 1.2B rows", "plan: last quarter → group by region → growth",
+            "<b>48 workers</b> running in parallel", "done in <b>0.8 s</b>"],
+    answer: "APAC grew fastest, up 18% on the quarter before.",
+    bars: [["APAC", 18], ["EMEA", 11], ["NA", 7], ["LATAM", 4]] },
+  { q: "Where are checkout errors coming from today?",
+    sources: ["logs/*.gz", "kafka · events", "gcs://traces"],
+    steps: ["reading <b>3 sources</b> in place · 640M lines", "plan: today → errors only → count by service",
+            "<b>32 workers</b> running in parallel", "done in <b>0.4 s</b>"],
+    answer: "Most come from the payments service, after the 09:40 deploy.",
+    bars: [["payments", 62], ["auth", 21], ["cart", 11], ["search", 6]] },
+  { q: "Which products do churned customers return most?",
+    sources: ["snowflake · returns", "mysql · customers", "tickets.json"],
+    steps: ["reading <b>3 sources</b> in place · 85M rows", "plan: churned customers → join returns → top products",
+            "<b>24 workers</b> running in parallel", "done in <b>0.6 s</b>"],
+    answer: "Headphones lead returns among churned customers, ahead of chargers.",
+    bars: [["headphones", 34], ["chargers", 22], ["cases", 15], ["cables", 9]] }
+];
+
+const chat = document.getElementById("chat");
+const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const wait = ms => new Promise(r => setTimeout(r, still ? 0 : ms));
+const el = (tag, cls, html = "") => Object.assign(document.createElement(tag), { className: cls, innerHTML: html });
+
+async function play(c) {
+  chat.replaceChildren();
+  const you = chat.appendChild(el("div", "msg you typing"));
+  for (const ch of still ? [c.q] : c.q) { you.textContent += ch; await wait(35); }
+  you.classList.remove("typing");
+  await wait(400);
+
+  const dod = chat.appendChild(el("div", "msg dod"));
+  const srcs = dod.appendChild(el("div", "srcs", c.sources.map(s => `<span class="src">${s}</span>`).join("")));
+  const flow = dod.appendChild(el("ul", "flow"));
+  for (const s of srcs.children) { await wait(250); s.classList.add("on"); }
+  for (const step of c.steps) {
+    flow.lastChild?.classList.add("done");
+    flow.appendChild(el("li", "", step));
+    await wait(700);
+  }
+  flow.lastChild.classList.add("done");
+
+  const max = Math.max(...c.bars.map(b => b[1]));
+  const ans = dod.appendChild(el("div", "answer", `<div class="lead">${c.answer}</div>` +
+    c.bars.map(([k, v]) => `<div class="bar"><span>${k}</span><div><span data-w="${v / max * 100}"></span></div><span>${v}%</span></div>`).join("")));
+  await wait(50);
+  ans.querySelectorAll("[data-w]").forEach(b => b.style.width = b.dataset.w + "%");
+}
+
+(async () => {
+  if (still) return play(CONVOS[0]);
+  for (let i = 0; ; i = (i + 1) % CONVOS.length) { await play(CONVOS[i]); await wait(4500); }
+})();
+</script>
 </body>
 </html>
