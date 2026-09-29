@@ -69,6 +69,15 @@
   .bar div span { display: block; height: 100%; border-radius: 4px; background: var(--accent); width: 0; transition: width .8s ease-out; }
   .typing::after { content: "▍"; animation: pulse 1s steps(1) infinite; }
   @media (prefers-reduced-motion: reduce) { .msg, .flow li, .answer { animation: none; } .flow li::before, .flow li::after { animation: none; } }
+  @media (max-width: 600px) {
+    .grid { padding-top: 40px; padding-bottom: 40px; }
+    .chat-body { height: auto; min-height: 500px; padding: 14px; gap: 10px; }
+    .msg { max-width: 92%; font-size: 14.5px; }
+    .msg.dod { width: 100%; max-width: 100%; padding: 12px; }
+    .flow { font-size: 12px; }
+    .flow li { padding-left: 20px; }
+    .bar { grid-template-columns: 76px 1fr 32px; gap: 8px; font-size: 11.5px; }
+  }
 </style>
 </head>
 <body>
@@ -95,19 +104,19 @@ document.getElementById("year").textContent = new Date().getFullYear();
 const CONVOS = [
   { q: "Which region grew fastest last quarter?",
     sources: ["s3://sales/*.parquet", "postgres · orders", "crm.csv"],
-    steps: ["reading <b>3 sources</b> in place · 1.2B rows", "plan: last quarter → group by region → growth",
+    steps: ["reading <b>3 sources</b> · 1.2B rows", "plan: last quarter → group by region → growth",
             "<b>48 workers</b> running in parallel", "done in <b>0.8 s</b>"],
     answer: "APAC grew fastest, up 18% on the quarter before.",
     bars: [["APAC", 18], ["EMEA", 11], ["NA", 7], ["LATAM", 4]] },
   { q: "Where are checkout errors coming from today?",
     sources: ["logs/*.gz", "kafka · events", "gcs://traces"],
-    steps: ["reading <b>3 sources</b> in place · 640M lines", "plan: today → errors only → count by service",
+    steps: ["reading <b>3 sources</b> · 640M lines", "plan: today → errors only → count by service",
             "<b>32 workers</b> running in parallel", "done in <b>0.4 s</b>"],
     answer: "Most come from the payments service, after the 09:40 deploy.",
     bars: [["payments", 62], ["auth", 21], ["cart", 11], ["search", 6]] },
   { q: "Which products do churned customers return most?",
     sources: ["snowflake · returns", "mysql · customers", "tickets.json"],
-    steps: ["reading <b>3 sources</b> in place · 85M rows", "plan: churned customers → join returns → top products",
+    steps: ["reading <b>3 sources</b> · 85M rows", "plan: churned customers → join returns → top products",
             "<b>24 workers</b> running in parallel", "done in <b>0.6 s</b>"],
     answer: "Headphones lead returns among churned customers, ahead of chargers.",
     bars: [["headphones", 34], ["chargers", 22], ["cases", 15], ["cables", 9]] }
