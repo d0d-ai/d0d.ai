@@ -33,6 +33,9 @@
   p { color: var(--soft); font-size: 19px; max-width: 34em; margin: 0 0 32px; }
   a.mail { color: var(--fg); font: 500 16px "JetBrains Mono", monospace; text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
   a.mail:hover { color: var(--accent); }
+  a.btn { display: inline-block; margin-right: 24px; padding: 12px 22px; border-radius: 10px; background: var(--accent); color: var(--bg);
+          font: 600 16px "Space Grotesk", system-ui, sans-serif; text-decoration: none; }
+  a.btn:hover { background: var(--fg); }
   footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
   footer .wrap { padding-top: 20px; padding-bottom: 20px; }
 
@@ -88,6 +91,7 @@
       <div class="eyebrow">In stealth mode</div>
       <h1>We're building the next <span>BIG</span> analytics platform.</h1>
       <p>We're heads down and not saying much yet. Want to hear first when we do?</p>
+      <a class="btn" href="https://workspace.d0d.ai/">Early access</a>
       <a class="mail" href="mailto:a@d0d.ai">a@d0d.ai</a>
     </div>
     <div class="chat" aria-label="Simulated chat showing how a question flows through your data">
