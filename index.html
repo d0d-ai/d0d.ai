@@ -3,162 +3,488 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>dOd — the next big analytics platform</title>
-<meta name="description" content="dOd is building the next big analytics platform. We're in stealth mode.">
-<meta property="og:title" content="dOd — the next big analytics platform">
-<meta property="og:description" content="We're building the next big analytics platform. In stealth mode, for now.">
+<title>dOd — Ask your business anything</title>
+<meta name="description" content="dOd answers questions about your sales, orders and spreadsheets in plain English — with a chart, in seconds. Connect Google Sheets or your database in two minutes. Free to start.">
+<link rel="canonical" href="https://d0d.ai/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="dOd">
+<meta property="og:url" content="https://d0d.ai/">
+<meta property="og:title" content="dOd — Ask your business anything">
+<meta property="og:description" content="Your sales, orders and spreadsheets, answered in plain English — with a chart, in seconds. No SQL, no analyst.">
+<meta property="og:image" content="https://d0d.ai/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://d0d.ai/og.png">
+<meta name="color-scheme" content="dark">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230E1320'/%3E%3Ccircle cx='32' cy='32' r='13' fill='none' stroke='%237FA0FF' stroke-width='6'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap">
 <style>
-  :root { --bg: #0B0F19; --line: #262F45; --fg: #F1EFE9; --soft: #B9C0D0; --muted: #8A93A8; --accent: #7FA0FF; --good: #6FCF97; }
+  :root { --bg: #0B0F19; --panel: #121829; --panel-2: #1A2236; --line: #262F45; --fg: #F1EFE9; --soft: #B9C0D0; --muted: #8A93A8;
+          --accent: #7FA0FF; --accent-2: #B48CFF; --good: #6FCF97; --warn: #F2C26B; }
   * { box-sizing: border-box; }
-  body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; background: var(--bg); color: var(--fg);
-         font: 16px/1.6 "IBM Plex Sans", system-ui, sans-serif; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 "IBM Plex Sans", system-ui, sans-serif; }
+  a { color: var(--accent); }
   .wrap { width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 24px; }
-  header { border-bottom: 1px solid var(--line); }
-  header .wrap { display: flex; align-items: center; height: 64px; }
-  .logo { font: 600 22px/1 "JetBrains Mono", monospace; color: var(--fg); letter-spacing: -0.02em; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+  /* header */
+  header { position: sticky; top: 0; z-index: 10; background: rgba(11,15,25,.86); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; align-items: center; gap: 28px; height: 64px; }
+  .logo { font: 600 22px/1 "JetBrains Mono", monospace; color: var(--fg); letter-spacing: -0.02em; text-decoration: none; }
   .logo b { color: var(--accent); font-weight: 600; }
-  main { flex: 1; display: flex; align-items: center; }
+  nav { display: flex; gap: 22px; margin-left: 12px; }
+  nav a { color: var(--soft); text-decoration: none; font-size: 15px; }
+  nav a:hover { color: var(--fg); }
+  .head-cta { margin-left: auto; display: flex; align-items: center; gap: 18px; }
+  .head-cta .signin { color: var(--soft); text-decoration: none; font-size: 15px; }
+  .head-cta .signin:hover { color: var(--fg); }
+  @media (max-width: 760px) { nav { display: none; } .head-cta .signin { display: none; } }
+
+  /* buttons */
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border-radius: 11px; border: 0; cursor: pointer;
+         background: var(--accent); color: var(--bg); font: 600 16px "Space Grotesk", system-ui, sans-serif; text-decoration: none; white-space: nowrap; }
+  .btn:hover { background: var(--fg); }
+  .btn.small { padding: 9px 16px; font-size: 15px; }
+  .btn.ghost { background: transparent; color: var(--fg); border: 1px solid var(--line); }
+  .btn.ghost:hover { border-color: var(--accent); background: transparent; }
+
+  /* hero */
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr); gap: 56px; align-items: center; padding: 64px 24px 72px; }
+  @media (max-width: 980px) { .hero { grid-template-columns: minmax(0, 1fr); gap: 40px; padding-top: 44px; } }
   .eyebrow { display: inline-flex; align-items: center; gap: 10px; font: 500 13px/1 "JetBrains Mono", monospace;
-             letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
-  .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--good);
-                     animation: pulse 2s ease-in-out infinite; }
+             letter-spacing: .12em; text-transform: uppercase; color: var(--good); }
+  .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--good); animation: pulse 2s ease-in-out infinite; }
   @keyframes pulse { 50% { opacity: .3; } }
-  @media (prefers-reduced-motion: reduce) { .eyebrow::before { animation: none; } }
-  h1 { font: 700 clamp(40px, 7vw, 80px)/1.05 "Space Grotesk", system-ui, sans-serif; letter-spacing: -0.03em; margin: 22px 0 20px; max-width: 14ch; }
-  h1 span { color: var(--accent); }
-  p { color: var(--soft); font-size: 19px; max-width: 34em; margin: 0 0 32px; }
-  a.mail { color: var(--fg); font: 500 16px "JetBrains Mono", monospace; text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
-  a.mail:hover { color: var(--accent); }
-  a.btn { display: inline-block; margin-right: 24px; padding: 12px 22px; border-radius: 10px; background: var(--accent); color: var(--bg);
-          font: 600 16px "Space Grotesk", system-ui, sans-serif; text-decoration: none; }
-  a.btn:hover { background: var(--fg); }
-  footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
-  footer .wrap { padding-top: 20px; padding-bottom: 20px; }
+  h1 { font: 700 clamp(38px, 5vw, 60px)/1.05 "Space Grotesk", system-ui, sans-serif; letter-spacing: -0.03em; margin: 20px 0 20px; }
+  h1 span { background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lede { color: var(--soft); font-size: clamp(17px, 2vw, 20px); max-width: 32em; margin: 0 0 30px; }
+  .cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
+  .cta-row .or { color: var(--soft); text-decoration: none; border-bottom: 1px solid var(--line); }
+  .cta-row .or:hover { color: var(--fg); border-color: var(--accent); }
+  .fine { color: var(--muted); font-size: 14px; margin-top: 18px; }
+  .fine span + span::before { content: " · "; }
 
-  .grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 56px; align-items: center; padding: 56px 24px; }
-  @media (max-width: 960px) { .grid { grid-template-columns: minmax(0, 1fr); gap: 40px; } }
-
-  .chat { background: #141A2A; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
-  .chat-top { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--line);
+  /* the live demo */
+  .demo { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,.45); }
+  .demo-top { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--line);
               font: 500 12px "JetBrains Mono", monospace; color: var(--muted); }
-  .chat-top i { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
-  .chat-top span { margin-left: auto; letter-spacing: .08em; text-transform: uppercase; }
-  .chat-body { height: 440px; padding: 18px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
-  .msg { max-width: 88%; padding: 10px 14px; border-radius: 14px; font-size: 15px; line-height: 1.5; animation: in .3s ease-out; }
-  .msg.you { align-self: flex-end; background: #2F4FD8; color: #fff; border-bottom-right-radius: 4px; }
-  .msg.dod { align-self: flex-start; background: #1A2236; border: 1px solid var(--line); border-bottom-left-radius: 4px; width: 88%; }
-  @keyframes in { from { opacity: 0; transform: translateY(6px); } }
+  .demo-top .live { display: inline-flex; align-items: center; gap: 7px; color: var(--good); letter-spacing: .08em; text-transform: uppercase; }
+  .demo-top .live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--good); animation: pulse 2s ease-in-out infinite; }
+  .demo-top .what { margin-left: auto; }
+  .demo-body { padding: 18px; }
+  .ask { display: flex; gap: 8px; align-items: center; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 6px 6px 6px 14px; }
+  .ask:focus-within { border-color: var(--accent); }
+  .ask input { flex: 1; min-width: 0; background: transparent; border: 0; outline: 0; color: var(--fg); font: 16px "IBM Plex Sans", system-ui, sans-serif; padding: 9px 0; }
+  .ask input::placeholder { color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 0; }
+  .chips button { background: transparent; color: var(--soft); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px;
+                  font: 500 13px "IBM Plex Sans", system-ui, sans-serif; cursor: pointer; }
+  .chips button:hover { color: var(--fg); border-color: var(--accent); }
+  .answer { margin-top: 16px; min-height: 300px; border-top: 1px solid var(--line); padding-top: 16px; }
+  .answer .q { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 14px; }
+  .answer .fast { color: var(--good); font: 600 13px "JetBrains Mono", monospace; }
+  .answer .head { font: 700 clamp(21px, 2.6vw, 27px)/1.2 "Space Grotesk", system-ui, sans-serif; letter-spacing: -0.01em; margin: 8px 0 16px; }
+  .answer .head b { background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .answer .how { color: var(--muted); font-size: 13px; margin-top: 14px; }
+  .answer .wait { color: var(--muted); font: 500 14px "JetBrains Mono", monospace; display: flex; align-items: center; gap: 10px; padding-top: 6px; }
+  .answer .wait::before { content: ""; width: 14px; height: 14px; border: 2px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .answer .note { color: var(--soft); background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .bars { display: grid; grid-template-columns: minmax(64px, max-content) 1fr auto; gap: 9px 12px; align-items: center; font-size: 14px; }
+  .bars .lb { color: var(--soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; }
+  .bars .tr { height: 20px; background: var(--panel-2); border-radius: 6px; overflow: hidden; }
+  .bars .br { height: 100%; width: 0; border-radius: 6px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width .9s cubic-bezier(.2,.8,.2,1); }
+  .bars .vl { font: 600 13px "JetBrains Mono", monospace; text-align: right; }
+  .linechart { width: 100%; height: auto; display: block; overflow: visible; }
+  .linechart .ln { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+  .linechart .tk { fill: var(--muted); font: 11px "JetBrains Mono", monospace; }
+  .big { font: 700 64px/1 "Space Grotesk", system-ui, sans-serif; background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .demo-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 14px 18px;
+               border-top: 1px solid var(--line); background: var(--panel-2); font-size: 14px; color: var(--soft); }
 
-  .srcs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
-  .src { font: 500 11.5px "JetBrains Mono", monospace; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; transition: .3s; }
-  .src.on { color: var(--fg); border-color: var(--accent); box-shadow: 0 0 0 3px rgba(127,160,255,.12); }
-  .flow { list-style: none; margin: 0; padding: 0; font: 13px/1.45 "JetBrains Mono", monospace; color: var(--soft); }
-  .flow li { position: relative; padding: 0 0 10px 22px; animation: in .3s ease-out; }
-  .flow li::before { content: ""; position: absolute; left: 3px; top: 5px; width: 8px; height: 8px; border-radius: 50%;
-                     background: var(--accent); animation: pulse 1s ease-in-out infinite; }
-  .flow li:not(:last-child)::after { content: ""; position: absolute; left: 6px; top: 16px; bottom: 0; width: 2px;
-                     background: linear-gradient(var(--accent) 50%, transparent 0) 0 0 / 2px 8px; animation: stream .6s linear infinite; }
-  .flow li.done::before { background: var(--good); animation: none; }
-  .flow li b { color: var(--fg); font-weight: 500; }
-  @keyframes stream { to { background-position: 0 8px; } }
-  .answer { margin-top: 4px; padding-top: 12px; border-top: 1px solid var(--line); animation: in .3s ease-out; }
-  .answer .lead { color: var(--fg); margin-bottom: 10px; }
-  .bar { display: grid; grid-template-columns: 84px 1fr 40px; align-items: center; gap: 10px; font: 12px "JetBrains Mono", monospace; color: var(--soft); margin-top: 6px; }
-  .bar div { height: 8px; border-radius: 4px; background: #34528A; }
-  .bar div span { display: block; height: 100%; border-radius: 4px; background: var(--accent); width: 0; transition: width .8s ease-out; }
-  .typing::after { content: "▍"; animation: pulse 1s steps(1) infinite; }
-  @media (prefers-reduced-motion: reduce) { .msg, .flow li, .answer { animation: none; } .flow li::before, .flow li::after { animation: none; } }
-  @media (max-width: 600px) {
-    .grid { padding-top: 40px; padding-bottom: 40px; }
-    .chat-body { height: auto; min-height: 500px; padding: 14px; gap: 10px; }
-    .msg { max-width: 92%; font-size: 14.5px; }
-    .msg.dod { width: 100%; max-width: 100%; padding: 12px; }
-    .flow { font-size: 12px; }
-    .flow li { padding-left: 20px; }
-    .bar { grid-template-columns: 76px 1fr 32px; gap: 8px; font-size: 11.5px; }
-  }
+  /* sections */
+  section { padding: 84px 0; border-top: 1px solid var(--line); }
+  .kicker { font: 500 13px "JetBrains Mono", monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+  h2 { font: 700 clamp(30px, 4vw, 44px)/1.1 "Space Grotesk", system-ui, sans-serif; letter-spacing: -0.02em; margin: 12px 0 14px; max-width: 20ch; }
+  .sub { color: var(--soft); font-size: 18px; max-width: 38em; margin: 0 0 40px; }
+  .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  @media (max-width: 900px) { .cards { grid-template-columns: minmax(0, 1fr); } }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 24px; }
+  .card h3 { font: 700 21px "Space Grotesk", system-ui, sans-serif; margin: 6px 0 8px; }
+  .card p { color: var(--soft); margin: 0; }
+  .step { font: 600 14px "JetBrains Mono", monospace; color: var(--accent); }
+  .qs { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 8px; }
+  .qs li { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; color: var(--fg); font-size: 15px; }
+  .qs li::before { content: "“"; color: var(--accent); }
+  .qs li::after { content: "”"; color: var(--accent); }
+
+  .logos { padding: 30px 0; border-top: 1px solid var(--line); }
+  .logos .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; }
+  .logos .label { color: var(--muted); font: 500 13px "JetBrains Mono", monospace; letter-spacing: .08em; text-transform: uppercase; margin-right: 8px; }
+  .logos .pill { border: 1px solid var(--line); border-radius: 999px; padding: 6px 13px; color: var(--soft); font-size: 14px; }
+  .logos .pill.hl { color: var(--fg); border-color: var(--accent); }
+
+  .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+  @media (max-width: 900px) { .split { grid-template-columns: minmax(0, 1fr); } }
+  .chatlike { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 20px; display: grid; gap: 12px; }
+  .bubble { max-width: 88%; padding: 10px 14px; border-radius: 14px; font-size: 15px; }
+  .bubble.you { justify-self: end; background: #2F4FD8; color: #fff; border-bottom-right-radius: 4px; }
+  .bubble.ai { background: var(--panel-2); border: 1px solid var(--line); border-bottom-left-radius: 4px; }
+  .bubble.ai small { display: block; color: var(--muted); font: 500 12px "JetBrains Mono", monospace; margin-top: 6px; }
+  .points { list-style: none; padding: 0; margin: 0; display: grid; gap: 18px; }
+  .points li { padding-left: 34px; position: relative; color: var(--soft); }
+  .points li b { color: var(--fg); display: block; font-weight: 600; }
+  .points li::before { content: "✓"; position: absolute; left: 0; top: 0; width: 22px; height: 22px; border-radius: 50%; background: rgba(111,207,151,.15);
+                       color: var(--good); font-size: 13px; display: grid; place-items: center; }
+
+  .plans { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 1040px) { .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 600px) { .plans { grid-template-columns: minmax(0, 1fr); } }
+  .plan { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; }
+  .plan.pick { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+  .plan .tag { font: 600 12px "JetBrains Mono", monospace; color: var(--accent); letter-spacing: .08em; text-transform: uppercase; min-height: 18px; }
+  .plan h3 { font: 700 22px "Space Grotesk", system-ui, sans-serif; margin: 6px 0 4px; }
+  .plan .price { font: 700 30px "Space Grotesk", system-ui, sans-serif; }
+  .plan .price small { font: 400 15px "IBM Plex Sans", system-ui, sans-serif; color: var(--muted); }
+  .plan .yr { color: var(--muted); font-size: 13px; min-height: 20px; }
+  .plan ul { list-style: none; padding: 0; margin: 16px 0 22px; display: grid; gap: 8px; color: var(--soft); font-size: 15px; flex: 1; }
+  .plan li::before { content: "✓  "; color: var(--good); }
+  .plan .btn { justify-content: center; }
+
+  details { border-bottom: 1px solid var(--line); padding: 18px 0; }
+  details:first-of-type { border-top: 1px solid var(--line); }
+  summary { cursor: pointer; font: 600 18px "Space Grotesk", system-ui, sans-serif; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; color: var(--accent); font-size: 22px; line-height: 1; }
+  details[open] summary::after { content: "–"; }
+  details p { color: var(--soft); margin: 10px 0 0; max-width: 46em; }
+
+  .final { text-align: center; }
+  .final h2 { margin-left: auto; margin-right: auto; }
+  .final .sub { margin-left: auto; margin-right: auto; }
+  footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 10px 22px; padding-top: 22px; padding-bottom: 22px; }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--fg); }
+  footer .right { margin-left: auto; }
+  @media (prefers-reduced-motion: reduce) { .eyebrow::before, .demo-top .live::before, .answer .wait::before { animation: none; } .bars .br { transition: none; } }
 </style>
 </head>
 <body>
-<header><div class="wrap"><span class="logo" aria-label="dOd">d<b>O</b>d</span></div></header>
-<main>
-  <div class="wrap grid">
-    <div>
-      <div class="eyebrow">In stealth mode</div>
-      <h1>We're building the next <span>BIG</span> analytics platform.</h1>
-      <p>We're heads down and not saying much yet. Want to hear first when we do?</p>
-      <a class="btn" href="https://workspace.d0d.ai/">Early access</a>
-      <a class="mail" href="mailto:a@d0d.ai">a@d0d.ai</a>
-    </div>
-    <div class="chat" aria-label="Simulated chat showing how a question flows through your data">
-      <div class="chat-top"><i></i><i></i><i></i>&nbsp;dOd<span>Simulated</span></div>
-      <div class="chat-body" id="chat" aria-live="polite"></div>
+<header>
+  <div class="wrap">
+    <a class="logo" href="/" aria-label="dOd home">d<b>O</b>d</a>
+    <nav aria-label="Sections">
+      <a href="#how">How it works</a>
+      <a href="#uses">Use cases</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="head-cta">
+      <a class="signin" href="https://workspace.d0d.ai/">Sign in</a>
+      <a class="btn small" href="https://workspace.d0d.ai/">Try free</a>
     </div>
   </div>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <div>
+      <div class="eyebrow">Live now · free to start</div>
+      <h1>Ask your business anything. <span>See the answer in seconds.</span></h1>
+      <p class="lede">dOd connects to your spreadsheets, store and databases, and answers your questions in plain English — with a chart, in seconds. No SQL. No analyst. No waiting.</p>
+      <div class="cta-row">
+        <a class="btn" href="https://workspace.d0d.ai/">Try it free — no card</a>
+        <a class="or" href="#demo">or ask the live demo →</a>
+      </div>
+      <div class="fine"><span>Set up in two minutes</span><span>Works with Google Sheets</span><span>Inside ChatGPT &amp; Claude</span></div>
+    </div>
+
+    <div class="demo" id="demo" aria-label="Live demo: ask a sample online store a question">
+      <div class="demo-top"><span class="live">Live</span><span class="what">sample online store · 2,000 orders</span></div>
+      <div class="demo-body">
+        <form class="ask" id="ask" autocomplete="off">
+          <input id="q" maxlength="200" placeholder="Ask anything — like “revenue per country”" aria-label="Ask the sample store a question">
+          <button class="btn small" id="go">Ask</button>
+        </form>
+        <div class="chips" aria-label="Questions to try">
+          <button type="button">revenue per country</button>
+          <button type="button">how did revenue change month over month?</button>
+          <button type="button">which category has the most revenue?</button>
+          <button type="button">what percent of orders are refunded?</button>
+        </div>
+        <div class="answer" id="answer" aria-live="polite"></div>
+      </div>
+      <div class="demo-foot"><span>That's a sample store. Yours takes two minutes to connect.</span><a class="btn small" href="https://workspace.d0d.ai/">Ask your own data</a></div>
+    </div>
+  </div>
+
+  <div class="logos">
+    <div class="wrap">
+      <span class="label">Connects to</span>
+      <span class="pill">Google Sheets</span><span class="pill">PostgreSQL</span><span class="pill">BigQuery</span>
+      <span class="pill">Amazon S3</span><span class="pill">Google Cloud Storage</span><span class="pill">Apache Iceberg</span>
+      <span class="pill">CSV &amp; Parquet uploads</span><span class="pill hl">ChatGPT &amp; Claude</span>
+    </div>
+  </div>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="kicker">How it works</div>
+      <h2>From question to chart in three steps.</h2>
+      <p class="sub">No setup project, no data team, no dashboards to build first. Connect what you already use and start asking.</p>
+      <div class="cards">
+        <div class="card"><div class="step">01 · Connect</div><h3>Point it at your data</h3><p>Sign in with Google and pick a spreadsheet, paste a database link, or drop in a file. dOd reads your data where it lives — nothing to export.</p></div>
+        <div class="card"><div class="step">02 · Ask</div><h3>Ask like you'd ask a colleague</h3><p>“Which products sold best last month?” dOd plans the question, runs it over all your data, and answers with a chart and a one-line summary.</p></div>
+        <div class="card"><div class="step">03 · Keep &amp; share</div><h3>Keep what matters</h3><p>Pin answers to a dashboard that stays up to date, invite your team, or share any chart as a card in Slack, email or LinkedIn.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="uses">
+    <div class="wrap">
+      <div class="kicker">Use cases</div>
+      <h2>The questions you ask every week — answered in seconds.</h2>
+      <p class="sub">Whatever you sell, the answers are already in your data. dOd gets them out without a spreadsheet marathon.</p>
+      <div class="cards">
+        <div class="card"><h3>Online stores</h3><p>Sales, products and customers, from your shop's data or a Google Sheet.</p>
+          <ul class="qs"><li>Which products sell best this month?</li><li>How much did refunds cost us last quarter?</li><li>Which customers haven't ordered in 90 days?</li></ul></div>
+        <div class="card"><h3>SaaS &amp; subscriptions</h3><p>Revenue, plans and churn, straight from your database.</p>
+          <ul class="qs"><li>How is monthly revenue trending?</li><li>Which plan churns the most?</li><li>How many trials converted last week?</li></ul></div>
+        <div class="card"><h3>Agencies &amp; services</h3><p>Clients, projects and hours, from the sheets you already keep.</p>
+          <ul class="qs"><li>Which client brings in the most revenue?</li><li>Where did our hours go this month?</li><li>Which projects ran over budget?</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="ai">
+    <div class="wrap split">
+      <div>
+        <div class="kicker">Inside ChatGPT &amp; Claude</div>
+        <h2>Ask your business from the chat you already use.</h2>
+        <p class="sub">Connect dOd to ChatGPT or Claude once. Then ask about your data right in the chat — dOd works out the answer from all of it, and only the short answer goes back.</p>
+        <a class="btn ghost" href="https://workspace.d0d.ai/">Connect your AI assistant</a>
+      </div>
+      <div class="chatlike" aria-label="Example conversation">
+        <div class="kicker" style="font-size:11px;color:var(--muted)">Example</div>
+        <div class="bubble you">What were our top 3 products last month?</div>
+        <div class="bubble ai">Wireless earbuds led with $18,240, then phone cases ($9,810) and chargers ($7,365).<small>answered by dOd · from your orders</small></div>
+        <div class="bubble you">And how does that compare to the month before?</div>
+        <div class="bubble ai">Earbuds are up 22%. Phone cases are flat, and chargers are down 9%.<small>answered by dOd · from your orders</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="trust">
+    <div class="wrap split">
+      <div>
+        <div class="kicker">Your data, safe</div>
+        <h2>Built so your data stays yours.</h2>
+        <p class="sub">dOd answers your questions without moving your business into someone else's system.</p>
+      </div>
+      <ul class="points">
+        <li><b>Reads your data where it lives</b>No exports, no copies of your database to keep in sync. Connect with a read-only login.</li>
+        <li><b>Passwords sealed, never shown again</b>Connection details are encrypted in your workspace — not visible to your team, to agents or in any answer.</li>
+        <li><b>The AI plans, the engine does the work</b>The AI turns your question into a plan; dOd's engine runs it over your data. Your tables aren't fed to a chatbot to read.</li>
+        <li><b>Google Sheets: only the files you pick</b>dOd can open the spreadsheets you choose, and nothing else in your Drive.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="wrap">
+      <div class="kicker">Pricing</div>
+      <h2>Start free. Upgrade when it's useful.</h2>
+      <p class="sub">Try everything on sample data for free. Connect your own data from $49 a month — cancel any time.</p>
+      <div class="plans">
+        <div class="plan"><div class="tag"></div><h3>Demo</h3><div class="price">Free</div><div class="yr">no card needed</div>
+          <ul><li>One workspace</li><li>Ask the sample store in plain English</li><li>Dashboards and sharing</li><li>From ChatGPT and Claude too</li></ul>
+          <a class="btn ghost" href="https://workspace.d0d.ai/">Start free</a></div>
+        <div class="plan pick"><div class="tag">Most popular</div><h3>Starter</h3><div class="price">$49<small> / month</small></div><div class="yr">or $490 a year</div>
+          <ul><li>Your own data: Sheets, databases, warehouse, files</li><li>3 editors, unlimited dashboard viewers</li><li>ChatGPT and Claude on your data</li><li>Email support</li></ul>
+          <a class="btn" href="https://workspace.d0d.ai/">Get started</a></div>
+        <div class="plan"><div class="tag"></div><h3>Team</h3><div class="price">$149<small> / month</small></div><div class="yr">or $1,490 a year</div>
+          <ul><li>Everything in Starter</li><li>3 workspaces, 10 editors</li><li>More speed for bigger data</li><li>Support within a business day</li></ul>
+          <a class="btn ghost" href="https://workspace.d0d.ai/">Get started</a></div>
+        <div class="plan"><div class="tag"></div><h3>Business</h3><div class="price">from $499<small> / month</small></div><div class="yr">&nbsp;</div>
+          <ul><li>Everything in Team</li><li>10 workspaces, 25+ editors</li><li>dOd in your own cloud, invoicing</li><li>A setup call and a named contact</li></ul>
+          <a class="btn ghost" href="mailto:a@d0d.ai?subject=dOd%20Business">Talk to us</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="kicker">FAQ</div>
+      <h2>Questions, answered.</h2>
+      <details><summary>Do I need to know SQL or have a data team?</summary><p>No. Ask in plain English, the way you'd ask a colleague. dOd shows how it worked out every answer in a sentence, so you can check it.</p></details>
+      <details><summary>What can I connect?</summary><p>Google Sheets, PostgreSQL, BigQuery, Amazon S3, Google Cloud Storage, Apache Iceberg, and CSV or Parquet file uploads. More sources are coming — tell us what you use.</p></details>
+      <details><summary>Is my data safe?</summary><p>dOd reads your data where it lives instead of copying your database, and connection details are encrypted in your workspace. With Google Sheets, dOd can open only the spreadsheets you pick. Use a read-only login for databases.</p></details>
+      <details><summary>Can my team use it?</summary><p>Yes. Invite editors who ask questions, and give everyone else a dashboard to view — dashboard viewers are unlimited on every paid plan.</p></details>
+      <details><summary>What does it cost?</summary><p>The demo is free with no card. Connecting your own data starts at $49 a month, or $490 a year. Change plans or cancel any time from your billing page.</p></details>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <h2>Your first answer is two minutes away.</h2>
+      <p class="sub">Sign in with Google, ask the sample store, then connect your own data when you're ready.</p>
+      <a class="btn" href="https://workspace.d0d.ai/">Try it free — no card</a>
+    </div>
+  </section>
 </main>
-<footer><div class="wrap">© <span id="year"></span> dOd · d0d.ai</div></footer>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year"></span> dOd</span>
+    <a href="mailto:a@d0d.ai">a@d0d.ai</a>
+    <a class="right" href="https://workspace.d0d.ai/">Sign in</a>
+  </div>
+</footer>
+
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
 
-// Simulated conversations. Illustrative only, not real data.
-const CONVOS = [
-  { q: "Which region grew fastest last quarter?",
-    sources: ["s3://sales/*.parquet", "postgres · orders", "crm.csv"],
-    steps: ["reading <b>3 sources</b> · 1.2B rows", "plan: last quarter → group by region → growth",
-            "<b>48 workers</b> running in parallel", "done in <b>0.8 s</b>"],
-    answer: "APAC grew fastest, up 18% on the quarter before.",
-    bars: [["APAC", 18], ["EMEA", 11], ["NA", 7], ["LATAM", 4]] },
-  { q: "Where are checkout errors coming from today?",
-    sources: ["logs/*.gz", "kafka · events", "gcs://traces"],
-    steps: ["reading <b>3 sources</b> · 640M lines", "plan: today → errors only → count by service",
-            "<b>32 workers</b> running in parallel", "done in <b>0.4 s</b>"],
-    answer: "Most come from the payments service, after the 09:40 deploy.",
-    bars: [["payments", 62], ["auth", 21], ["cart", 11], ["search", 6]] },
-  { q: "Which products do churned customers return most?",
-    sources: ["snowflake · returns", "mysql · customers", "tickets.json"],
-    steps: ["reading <b>3 sources</b> · 85M rows", "plan: churned customers → join returns → top products",
-            "<b>24 workers</b> running in parallel", "done in <b>0.6 s</b>"],
-    answer: "Headphones lead returns among churned customers, ahead of chargers.",
-    bars: [["headphones", 34], ["chargers", 22], ["cases", 15], ["cables", 9]] }
-];
+// The live demo: questions go to dOd's public demo workspace, which answers a
+// sample online store's 2,000 orders. ?api= points it elsewhere, for testing.
+(() => {
+  const API = new URLSearchParams(location.search).get("api") || "https://workspace.d0d.ai";
+  const form = document.getElementById("ask"), input = document.getElementById("q"), box = document.getElementById("answer");
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const wait = ms => new Promise(r => setTimeout(r, still ? 0 : ms));
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const num = v => typeof v === "number" ? v : (typeof v === "string" && v.trim() !== "" && !isNaN(+v) ? +v : null);
+  const fmt = (v, pct) => (Math.abs(v) >= 1e6 ? new Intl.NumberFormat(undefined, {notation: "compact", maximumFractionDigits: 1}).format(v)
+    : v.toLocaleString(undefined, {maximumFractionDigits: Math.abs(v) >= 100 ? 0 : 2})) + (pct ? "%" : "");
+  const isTime = s => /^\d{4}-\d{2}/.test(String(s));
+  const when = (s, short) => {
+    const m = /^(\d{4})-(\d{2})(?:-(\d{2}))?/.exec(String(s));
+    if (!m) return String(s);
+    const d = new Date(Date.UTC(+m[1], +m[2] - 1, +(m[3] || 1)));
+    return d.toLocaleDateString(undefined, m[3] ? {month: "short", day: "numeric", timeZone: "UTC"} : short ? {month: "short", timeZone: "UTC"} : {month: "short", year: "numeric", timeZone: "UTC"});
+  };
 
-const chat = document.getElementById("chat");
-const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const wait = ms => new Promise(r => setTimeout(r, still ? 0 : ms));
-const el = (tag, cls, html = "") => Object.assign(document.createElement(tag), { className: cls, innerHTML: html });
-
-async function play(c) {
-  chat.replaceChildren();
-  const you = chat.appendChild(el("div", "msg you typing"));
-  for (const ch of still ? [c.q] : c.q) { you.textContent += ch; await wait(35); }
-  you.classList.remove("typing");
-  await wait(400);
-
-  const dod = chat.appendChild(el("div", "msg dod"));
-  const srcs = dod.appendChild(el("div", "srcs", c.sources.map(s => `<span class="src">${s}</span>`).join("")));
-  const flow = dod.appendChild(el("ul", "flow"));
-  for (const s of srcs.children) { await wait(250); s.classList.add("on"); }
-  for (const step of c.steps) {
-    flow.lastChild?.classList.add("done");
-    flow.appendChild(el("li", "", step));
-    await wait(700);
+  function pairsOf(r) {
+    const rows = r.rows || [];
+    if (!rows.length) return {pairs: []};
+    if (!rows[0].fields) return {pairs: rows.map(x => ({label: String(x.key ?? "(empty)"), value: num(x.value)})).filter(p => p.value != null)};
+    const cols = r.columns?.length ? r.columns : Object.keys(rows[0].fields);
+    const pick = (label, value, pct) => ({pct, pairs: rows.map(x => ({label: String(x.fields[label] ?? "(empty)"), value: num(x.fields[value])})).filter(p => p.value != null)});
+    if (cols.includes("share") && cols.includes("group")) return pick("group", "share", true);
+    for (const v of ["running_total", "rolling_avg", "value"]) if (cols.includes(v) && cols.includes("period")) return pick("period", v);
+    const numeric = cols.filter(c => rows.every(x => x.fields[c] == null || num(x.fields[c]) != null));
+    const label = cols.find(c => !numeric.includes(c)) || cols[0], value = numeric.find(c => c !== label);
+    return value ? pick(label, value) : {pairs: []};
   }
-  flow.lastChild.classList.add("done");
 
-  const max = Math.max(...c.bars.map(b => b[1]));
-  const ans = dod.appendChild(el("div", "answer", `<div class="lead">${c.answer}</div>` +
-    c.bars.map(([k, v]) => `<div class="bar"><span>${k}</span><div><span data-w="${v / max * 100}"></span></div><span>${v}%</span></div>`).join("")));
-  await wait(50);
-  ans.querySelectorAll("[data-w]").forEach(b => b.style.width = b.dataset.w + "%");
-}
+  function bars(pairs, pct) {
+    const top = pairs.slice().sort((a, b) => b.value - a.value).slice(0, 7);
+    const max = Math.max(...top.map(p => p.value), 0) || 1;
+    const g = el("div", "bars"), fills = [];
+    for (const p of top) {
+      const tr = el("div", "tr"), br = el("div", "br");
+      tr.append(br); fills.push([br, Math.max(2, 100 * p.value / max)]);
+      g.append(el("div", "lb", p.label), tr, el("div", "vl", fmt(p.value, pct)));
+    }
+    requestAnimationFrame(() => requestAnimationFrame(() => fills.forEach(([b, w]) => b.style.width = w + "%")));
+    return g;
+  }
 
-(async () => {
-  if (still) return play(CONVOS[0]);
-  for (let i = 0; ; i = (i + 1) % CONVOS.length) { await play(CONVOS[i]); await wait(4500); }
+  function line(pairs) {
+    const pts = pairs.slice().sort((a, b) => a.label < b.label ? -1 : 1);
+    const W = Math.max(280, Math.round(box.clientWidth)), H = W < 500 ? 170 : 210, T = 10, B = 24;
+    const max = Math.max(...pts.map(p => p.value)), min = Math.min(0, ...pts.map(p => p.value));
+    const x = i => 4 + (W - 8) * (pts.length < 2 ? .5 : i / (pts.length - 1));
+    const y = v => T + (H - T - B) * (1 - (v - min) / ((max - min) || 1));
+    const ns = "http://www.w3.org/2000/svg", mk = (t, a) => { const e = document.createElementNS(ns, t); for (const k in a) e.setAttribute(k, a[k]); return e; };
+    const svg = mk("svg", {viewBox: `0 0 ${W} ${H}`, class: "linechart", role: "img", "aria-label": "line chart"});
+    const grad = mk("linearGradient", {id: "fill", x1: 0, y1: 0, x2: 0, y2: 1});
+    grad.append(mk("stop", {offset: "0%", "stop-color": "#7FA0FF", "stop-opacity": ".3"}), mk("stop", {offset: "100%", "stop-color": "#7FA0FF", "stop-opacity": "0"}));
+    const defs = mk("defs", {}); defs.append(grad); svg.append(defs);
+    const d = pts.map((p, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(p.value).toFixed(1)}`).join("");
+    svg.append(mk("path", {d: `${d}L${x(pts.length - 1)},${H - B}L${x(0)},${H - B}Z`, fill: "url(#fill)"}));
+    const path = mk("path", {d, class: "ln"}); svg.append(path);
+    const last = pts.length - 1;
+    svg.append(mk("circle", {cx: x(last), cy: y(pts[last].value), r: 4.5, fill: "#7FA0FF"}));
+    for (const i of [...new Set([0, Math.floor(last / 2), last])]) {
+      const t = mk("text", {x: x(i), y: H - 5, class: "tk", "text-anchor": i === 0 ? "start" : i === last ? "end" : "middle"});
+      t.textContent = when(pts[i].label); svg.append(t);
+    }
+    requestAnimationFrame(() => {
+      const n = path.getTotalLength?.() || 0;
+      if (!n || still) return;
+      path.style.strokeDasharray = n; path.style.strokeDashoffset = n; path.getBoundingClientRect();
+      path.style.transition = "stroke-dashoffset 1.1s ease-out"; path.style.strokeDashoffset = 0;
+    });
+    return svg;
+  }
+
+  function render(res, ms) {
+    box.replaceChildren();
+    const q = el("div", "q");
+    q.append(el("span", "", "“" + res.question + "”"));
+    if (!res.error) q.append(el("span", "fast", "⚡ " + (Math.max(ms, res.ms || 0) / 1000).toFixed(1) + "s"));
+    box.append(q);
+    if (res.error) { box.append(el("div", "note", res.error)); return; }
+    const r = res.result || {}, {pairs, pct} = pairsOf(r), head = el("div", "head");
+    const b = text => Object.assign(el("b"), {textContent: text});
+    const named = pct && pairs.find(p => new RegExp("\\b" + p.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\b", "i").test(res.question));
+    if (r.count != null && !pairs.length) {
+      box.append(head, el("div", "big", fmt(r.count)));
+    } else if (pairs.length && pairs.every(p => isTime(p.label))) {
+      const s = pairs.slice().sort((a, c) => a.label < c.label ? -1 : 1), first = s[0].value, last = s[s.length - 1];
+      const change = first ? Math.round(100 * (last.value - first) / Math.abs(first)) : null;
+      head.append(document.createTextNode(when(last.label) + ": "), b(fmt(last.value, pct)));
+      if (change != null) head.append(document.createTextNode(` · ${change >= 0 ? "up" : "down"} ${Math.abs(change)}% since ${when(s[0].label, true)}`));
+      box.append(head, line(pairs));
+    } else if (named) {
+      head.append(document.createTextNode(named.label + ": "), b(fmt(named.value, true)));
+      box.append(head, bars(pairs, pct));
+    } else if (pairs.length) {
+      const top = pairs.reduce((a, c) => c.value > a.value ? c : a), total = pairs.reduce((t, p) => t + p.value, 0);
+      head.append(b(top.label), document.createTextNode(" leads with " + fmt(top.value, pct)));
+      if (!pct && total > 0 && pairs.length > 1) head.append(document.createTextNode(` — ${Math.round(100 * top.value / total)}% of the total`));
+      box.append(head, bars(pairs, pct));
+    } else {
+      box.append(el("div", "note", "Nothing matched that — try one of the questions above."));
+    }
+    if (res.readback) box.append(el("div", "how", "How dOd worked it out: " + res.readback));
+  }
+
+  let busy = false;
+  async function ask(question, typed) {
+    question = question.trim();
+    if (!question || busy) return;
+    busy = true;
+    if (typed && !still) { input.value = ""; for (const ch of question) { input.value += ch; await wait(28); } }
+    else input.value = question;
+    box.replaceChildren(el("div", "wait", "Reading 2,000 orders…"));
+    const t0 = performance.now();
+    let res;
+    try {
+      const r = await fetch(API + "/try", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({question})});
+      res = await r.json();
+    } catch {
+      res = {question, error: "The live demo is taking a break. Try it in your own free workspace instead — it takes a minute."};
+    }
+    res.question = res.question || question;
+    render(res, performance.now() - t0);
+    busy = false;
+  }
+  form.addEventListener("submit", e => { e.preventDefault(); ask(input.value); });
+  document.querySelectorAll(".chips button").forEach(btn => btn.onclick = () => ask(btn.textContent));
+
+  // The first answer asks itself, once the demo is on screen: a visitor sees
+  // dOd work before deciding to type anything.
+  const first = document.querySelector(".chips button").textContent;
+  new IntersectionObserver((seen, obs) => {
+    if (seen.some(s => s.isIntersecting)) { obs.disconnect(); setTimeout(() => ask(first, true), 500); }
+  }, {threshold: .4}).observe(box);
 })();
 </script>
 </body>
