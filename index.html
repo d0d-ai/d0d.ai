@@ -126,7 +126,9 @@
   .logos { padding: 30px 0; border-top: 1px solid var(--line); }
   .logos .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; }
   .logos .label { color: var(--muted); font: 500 13px "JetBrains Mono", monospace; letter-spacing: .08em; text-transform: uppercase; margin-right: 8px; }
-  .logos .pill { border: 1px solid var(--line); border-radius: 999px; padding: 6px 13px; color: var(--soft); font-size: 14px; }
+  .logos .pill { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); border-radius: 999px; padding: 6px 13px; color: var(--soft); font-size: 14px; }
+  .logos .pill img, .logos .pill svg { width: 16px; height: 16px; flex: none; }
+  .logos .pill.more { border-style: dashed; color: var(--muted); }
   .logos .pill.hl { color: var(--fg); border-color: var(--accent); }
 
   .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
@@ -241,9 +243,10 @@
   <div class="logos">
     <div class="wrap">
       <span class="label">Connects to</span>
-      <span class="pill">Google Sheets</span><span class="pill">PostgreSQL</span><span class="pill">BigQuery</span>
-      <span class="pill">Amazon S3</span><span class="pill">Google Cloud Storage</span><span class="pill">Apache Iceberg</span>
-      <span class="pill">CSV &amp; Parquet uploads</span><span class="pill hl">ChatGPT &amp; Claude</span>
+      <span class="pill"><img src="https://cdn.simpleicons.org/googlesheets/B9C0D0" alt="">Google Sheets</span><span class="pill"><img src="https://cdn.simpleicons.org/postgresql/B9C0D0" alt="">PostgreSQL</span><span class="pill"><img src="https://cdn.simpleicons.org/googlebigquery/B9C0D0" alt="">BigQuery</span>
+      <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5l2 14c.3 1.7 2.9 3 6 3s5.7-1.3 6-3l2-14"/></svg>Amazon S3</span><span class="pill"><img src="https://cdn.simpleicons.org/googlecloudstorage/B9C0D0" alt="">Google Cloud Storage</span><span class="pill"><img src="https://cdn.simpleicons.org/apache/B9C0D0" alt="">Apache Iceberg</span>
+      <span class="pill"><img src="https://cdn.simpleicons.org/apacheparquet/B9C0D0" alt="">CSV &amp; Parquet uploads</span><span class="pill hl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>ChatGPT</span><span class="pill hl"><img src="https://cdn.simpleicons.org/claude/B9C0D0" alt="">Claude</span>
+      <span class="pill more">+ many more</span>
     </div>
   </div>
 
