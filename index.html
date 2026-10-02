@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>dOd — Ask your business anything</title>
-<meta name="description" content="dOd answers questions about your sales, orders and spreadsheets in plain English — with a chart, in seconds. Connect Google Sheets or your database in two minutes. Free to start.">
+<title>dOd — The big data platform for AI agents</title>
+<meta name="description" content="Connect your agents to terabytes of data. They ask in plain English; dOd's built-in map-reduce model builder turns it into an exact plan and runs it over all your data. No SQL, no translation, no guessing.">
 <link rel="canonical" href="https://d0d.ai/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="dOd">
 <meta property="og:url" content="https://d0d.ai/">
-<meta property="og:title" content="dOd — Ask your business anything">
-<meta property="og:description" content="Your sales, orders and spreadsheets, answered in plain English — with a chart, in seconds. No SQL, no analyst.">
+<meta property="og:title" content="dOd — The big data platform for AI agents">
+<meta property="og:description" content="Your agents speak English. dOd turns it into exact answers over terabytes of data. No SQL, no translation, no guessing.">
 <meta property="og:image" content="https://d0d.ai/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -174,12 +174,26 @@
   footer .right { margin-left: auto; }
   @media (prefers-reduced-motion: reduce) { .eyebrow::before, .demo-top .live::before, .answer .wait::before { animation: none; } .bars .br { transition: none; } }
 </style>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
+  getAnalytics(initializeApp({
+    apiKey: "AIzaSyBFtR8VVwOWFk2R0olHZd5aoNK0hfdFbaw",
+    authDomain: "d0d-gcp-workspace.firebaseapp.com",
+    projectId: "d0d-gcp-workspace",
+    storageBucket: "d0d-gcp-workspace.firebasestorage.app",
+    messagingSenderId: "692100161813",
+    appId: "1:692100161813:web:0f77756ab7d8b34fe4491c",
+    measurementId: "G-N7ZT2ZDNQ1"
+  }));
+</script>
 </head>
 <body>
 <header>
   <div class="wrap">
     <a class="logo" href="/" aria-label="dOd home">d<b>O</b>d</a>
     <nav aria-label="Sections">
+      <a href="#ai">For agents</a>
       <a href="#how">How it works</a>
       <a href="#uses">Use cases</a>
       <a href="#pricing">Pricing</a>
@@ -195,14 +209,14 @@
 <main>
   <div class="wrap hero">
     <div>
-      <div class="eyebrow">Live now · free to start</div>
-      <h1>Ask your business anything. <span>See the answer in seconds.</span></h1>
-      <p class="lede">dOd connects to your spreadsheets, store and databases, and answers your questions in plain English — with a chart, in seconds. No SQL. No analyst. No waiting.</p>
+      <div class="eyebrow">Live now · built for agents</div>
+      <h1>The big data platform for AI agents. <span>Your agents only need English.</span></h1>
+      <p class="lede">Connect Claude, ChatGPT or your own agents to your data. They ask in plain English; dOd's embedded map-reduce model builder turns the question into an exact plan and runs it over terabytes. No SQL. No translation. No guessing.</p>
       <div class="cta-row">
         <a class="btn" href="https://workspace.d0d.ai/">Try it free — no card</a>
         <a class="or" href="#demo">or ask the live demo →</a>
       </div>
-      <div class="fine"><span>Set up in two minutes</span><span>Works with Google Sheets</span><span>Inside ChatGPT &amp; Claude</span></div>
+      <div class="fine"><span>Works on TBs of data</span><span>Any agent: Claude, ChatGPT, your own</span><span>Set up in two minutes</span></div>
     </div>
 
     <div class="demo" id="demo" aria-label="Live demo: ask a sample online store a question">
@@ -233,6 +247,24 @@
     </div>
   </div>
 
+  <section id="ai">
+    <div class="wrap split">
+      <div>
+        <div class="kicker">For agents</div>
+        <h2>Your agents don't need SQL. They need English.</h2>
+        <p class="sub">Connect any agent to dOd once. It asks in plain English, and dOd's embedded map-reduce model builder compiles the question straight into an exact plan — no text-to-SQL translation, no guessed joins — then runs it across terabytes of data. Only the short answer goes back to the agent.</p>
+        <a class="btn ghost" href="https://workspace.d0d.ai/">Connect your agent</a>
+      </div>
+      <div class="chatlike" aria-label="Example agent conversation">
+        <div class="kicker" style="font-size:11px;color:var(--muted)">Example</div>
+        <div class="bubble you">Across last quarter's events, which 3 countries grew fastest?</div>
+        <div class="bubble ai">Brazil (+41%), India (+33%) and Poland (+27%), out of 3.8B events scanned.<small>answered by dOd · map-reduce over 2.1 TB</small></div>
+        <div class="bubble you">Break Brazil down by device.</div>
+        <div class="bubble ai">Mobile drove 78% of Brazil's growth; desktop was flat.<small>answered by dOd · map-reduce over 2.1 TB</small></div>
+      </div>
+    </div>
+  </section>
+
   <section id="how">
     <div class="wrap">
       <div class="kicker">How it works</div>
@@ -258,24 +290,6 @@
           <ul class="qs"><li>How is monthly revenue trending?</li><li>Which plan churns the most?</li><li>How many trials converted last week?</li></ul></div>
         <div class="card"><h3>Agencies &amp; services</h3><p>Clients, projects and hours, from the sheets you already keep.</p>
           <ul class="qs"><li>Which client brings in the most revenue?</li><li>Where did our hours go this month?</li><li>Which projects ran over budget?</li></ul></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="ai">
-    <div class="wrap split">
-      <div>
-        <div class="kicker">Inside ChatGPT &amp; Claude</div>
-        <h2>Ask your business from the chat you already use.</h2>
-        <p class="sub">Connect dOd to ChatGPT or Claude once. Then ask about your data right in the chat — dOd works out the answer from all of it, and only the short answer goes back.</p>
-        <a class="btn ghost" href="https://workspace.d0d.ai/">Connect your AI assistant</a>
-      </div>
-      <div class="chatlike" aria-label="Example conversation">
-        <div class="kicker" style="font-size:11px;color:var(--muted)">Example</div>
-        <div class="bubble you">What were our top 3 products last month?</div>
-        <div class="bubble ai">Wireless earbuds led with $18,240, then phone cases ($9,810) and chargers ($7,365).<small>answered by dOd · from your orders</small></div>
-        <div class="bubble you">And how does that compare to the month before?</div>
-        <div class="bubble ai">Earbuds are up 22%. Phone cases are flat, and chargers are down 9%.<small>answered by dOd · from your orders</small></div>
       </div>
     </div>
   </section>
@@ -322,7 +336,7 @@
     <div class="wrap">
       <div class="kicker">FAQ</div>
       <h2>Questions, answered.</h2>
-      <details><summary>Do I need to know SQL or have a data team?</summary><p>No. Ask in plain English, the way you'd ask a colleague. dOd shows how it worked out every answer in a sentence, so you can check it.</p></details>
+      <details><summary>Do my agents (or I) need to know SQL?</summary><p>No. Agents and people ask in plain English. dOd's embedded map-reduce model builder turns that into an exact plan — no translation to SQL, no guessing — and runs it over all your data, even terabytes. dOd shows how it worked out every answer in a sentence, so you can check it.</p></details>
       <details><summary>What can I connect?</summary><p>Google Sheets, PostgreSQL, BigQuery, Amazon S3, Google Cloud Storage, Apache Iceberg, and CSV or Parquet file uploads. More sources are coming — tell us what you use.</p></details>
       <details><summary>Is my data safe?</summary><p>dOd reads your data where it lives instead of copying your database, and connection details are encrypted in your workspace. With Google Sheets, dOd can open only the spreadsheets you pick. Use a read-only login for databases.</p></details>
       <details><summary>Can my team use it?</summary><p>Yes. Invite editors who ask questions, and give everyone else a dashboard to view — dashboard viewers are unlimited on every paid plan.</p></details>
