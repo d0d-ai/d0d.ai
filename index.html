@@ -85,6 +85,20 @@
   .chips button { background: transparent; color: var(--soft); border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px;
                   font: 500 13px "IBM Plex Sans", system-ui, sans-serif; cursor: pointer; }
   .chips button:hover { color: var(--fg); border-color: var(--accent); }
+  /* What the demo found ahead: the finding first, the question under it. */
+  .chips button.found { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; text-align: left; border-radius: 12px; padding: 7px 12px; }
+  .chips button.found b { color: var(--fg); font-weight: 600; }
+  .chips button.found span { color: var(--muted); font-size: 12px; }
+  .why-btn { margin-top: 14px; background: transparent; color: var(--accent); border: 1px solid var(--accent); border-radius: 999px;
+             padding: 7px 14px; font: 600 14px "Space Grotesk", system-ui, sans-serif; cursor: pointer; }
+  .why-btn:hover { background: rgba(127,160,255,.12); }
+  .why { margin-top: 16px; border-top: 1px dashed var(--line); padding-top: 14px; }
+  .why .wh { font: 600 17px "Space Grotesk", system-ui, sans-serif; }
+  .why .wh small { display: block; color: var(--muted); font: 400 13px "IBM Plex Sans", system-ui, sans-serif; margin-top: 2px; }
+  .why .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 8px; margin-top: 10px; }
+  .why .card { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font-size: 14px; }
+  .why .card b { display: block; }
+  .why .card span { color: var(--muted); font-size: 12.5px; }
   .answer { margin-top: 16px; min-height: 300px; border-top: 1px solid var(--line); padding-top: 16px; }
   .answer .q { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 14px; }
   .answer .fast { color: var(--good); font: 600 13px "JetBrains Mono", monospace; }
@@ -455,10 +469,11 @@ document.getElementById("year").textContent = new Date().getFullYear();
     if (r.count != null && !pairs.length) {
       box.append(head, el("div", "big", fmt(r.count)));
     } else if (pairs.length && pairs.every(p => isTime(p.label))) {
-      const s = pairs.slice().sort((a, c) => a.label < c.label ? -1 : 1), first = s[0].value, last = s[s.length - 1];
-      const change = first ? Math.round(100 * (last.value - first) / Math.abs(first)) : null;
+      // The latest against the one before: what a finding about it says too.
+      const s = pairs.slice().sort((a, c) => a.label < c.label ? -1 : 1), last = s[s.length - 1], prev = s[s.length - 2];
+      const change = prev?.value ? Math.round(100 * (last.value - prev.value) / Math.abs(prev.value)) : null;
       head.append(document.createTextNode(when(last.label) + ": "), b(fmt(last.value, pct)));
-      if (change != null) head.append(document.createTextNode(` · ${change >= 0 ? "up" : "down"} ${Math.abs(change)}% since ${when(s[0].label, true)}`));
+      if (change != null) head.append(document.createTextNode(` · ${change >= 0 ? "up" : "down"} ${Math.abs(change)}% on ${when(prev.label, true)}`));
       box.append(head, line(pairs));
     } else if (named) {
       head.append(document.createTextNode(named.label + ": "), b(fmt(named.value, true)));
@@ -472,6 +487,36 @@ document.getElementById("year").textContent = new Date().getFullYear();
       box.append(el("div", "note", "Nothing matched that — try one of the questions above."));
     }
     if (res.readback) box.append(el("div", "how", "How dOd worked it out: " + res.readback));
+    // A change over time: dOd can say what drove it, computed, not guessed.
+    if (res.can_why) {
+      const btn = el("button", "why-btn", "Why did it change? →");
+      btn.type = "button";
+      btn.onclick = () => explain(res.question, btn);
+      box.append(btn);
+    }
+  }
+
+  const icon = {volume: "🧮", driver: "🔎", against: "↩️"};
+  // "2026-06" as people say it: "Jun 2026".
+  const months = text => String(text).replace(/\b\d{4}-\d{2}(?:-\d{2})?\b/g, m => when(m));
+  async function explain(question, btn) {
+    btn.disabled = true; btn.textContent = "Comparing every country, category and channel…";
+    let res;
+    try { res = await (await fetch(API + "/try", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({question, why: true})})).json(); }
+    catch { res = {error: "The live demo is taking a break — try again in a moment."}; }
+    const w = el("div", "why");
+    if (res.error || !res.headline) { w.append(el("div", "note", res.error || "Nothing to explain there.")); btn.replaceWith(w); return; }
+    const [head, sub] = res.headline.split("\n").map(months), wh = el("div", "wh", head);
+    if (sub) wh.append(el("small", "", sub));
+    const cards = el("div", "cards");
+    for (const f of res.findings || []) {
+      const c = el("div", "card");
+      c.append(el("b", "", (icon[f.kind] || "•") + " " + months(f.title)));
+      if (f.detail) c.append(el("span", "", months(f.detail)));
+      cards.append(c);
+    }
+    w.append(wh, cards);
+    btn.replaceWith(w);
   }
 
   let busy = false;
@@ -495,13 +540,28 @@ document.getElementById("year").textContent = new Date().getFullYear();
     busy = false;
   }
   form.addEventListener("submit", e => { e.preventDefault(); ask(input.value); });
-  document.querySelectorAll(".chips button").forEach(btn => btn.onclick = () => ask(btn.textContent));
+  const chips = document.querySelector(".chips");
+  const wire = () => chips.querySelectorAll("button").forEach(btn => btn.onclick = () => ask(btn.dataset.q || btn.textContent));
+  wire();
+
+  // What dOd found in the store before anyone asked: the questions worth
+  // asking, each leading with its answer. The fixed ones stay if it cannot say.
+  const found = fetch(API + "/try/findings").then(r => r.json()).then(({findings}) => {
+    if (!findings?.length) return;
+    chips.replaceChildren(...findings.map(f => {
+      const b = el("button", "found"); b.type = "button"; b.dataset.q = f.text;
+      b.append(el("b", "", months(f.found.charAt(0).toUpperCase() + f.found.slice(1))), el("span", "", f.text));
+      return b;
+    }));
+    wire();
+  }).catch(() => {});
 
   // The first answer asks itself, once the demo is on screen: a visitor sees
   // dOd work before deciding to type anything.
-  const first = document.querySelector(".chips button").textContent;
   new IntersectionObserver((seen, obs) => {
-    if (seen.some(s => s.isIntersecting)) { obs.disconnect(); setTimeout(() => ask(first, true), 500); }
+    if (!seen.some(s => s.isIntersecting)) return;
+    obs.disconnect();
+    found.finally(() => setTimeout(() => { const b = chips.querySelector("button"); ask(b.dataset.q || b.textContent, true); }, 500));
   }, {threshold: .4}).observe(box);
 })();
 </script>
