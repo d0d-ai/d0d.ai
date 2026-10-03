@@ -235,22 +235,22 @@
       <div class="fine"><span>Works on TBs of data</span><span>Any agent: Claude, ChatGPT, your own</span><span>Zero AI token charges</span><span>Set up in two minutes</span></div>
     </div>
 
-    <div class="demo" id="demo" aria-label="Live demo: ask a sample online store a question">
-      <div class="demo-top"><span class="live">Live</span><span class="what">sample online store · 2,000 orders</span></div>
+    <div class="demo" id="demo" aria-label="Live demo: ask a sample coffee-gear store a question">
+      <div class="demo-top"><span class="live">Live</span><span class="what">Kettle &amp; Co, a sample store · 3.2M rows · 5 tables</span></div>
       <div class="demo-body">
         <form class="ask" id="ask" autocomplete="off">
-          <input id="q" maxlength="200" placeholder="Ask anything — like “revenue per country”" aria-label="Ask the sample store a question">
+          <input id="q" maxlength="200" placeholder="Ask anything — like “revenue per city”" aria-label="Ask the sample store a question">
           <button class="btn small" id="go">Ask</button>
         </form>
         <div class="chips" aria-label="Questions to try">
-          <button type="button">revenue per country</button>
-          <button type="button">how did revenue change month over month?</button>
-          <button type="button">which category has the most revenue?</button>
-          <button type="button">what percent of orders are refunded?</button>
+          <button type="button">How is revenue trending month by month?</button>
+          <button type="button">Which city has the highest share of refunded orders?</button>
+          <button type="button">revenue per utm_source</button>
+          <button type="button">How many customers came back more than once?</button>
         </div>
         <div class="answer" id="answer" aria-live="polite"></div>
       </div>
-      <div class="demo-foot"><span>That's a sample store. Yours takes two minutes to connect.</span><a class="btn small" href="https://workspace.d0d.ai/">Ask your own data</a></div>
+      <div class="demo-foot"><span>Three years of a made-up store: orders, items, customers, products, ad spend. Yours takes two minutes to connect.</span><a class="btn small" href="https://workspace.d0d.ai/">Ask your own data</a></div>
     </div>
   </div>
 
@@ -383,7 +383,7 @@
 document.getElementById("year").textContent = new Date().getFullYear();
 
 // The live demo: questions go to dOd's public demo workspace, which answers a
-// sample online store's 2,000 orders. ?api= points it elsewhere, for testing.
+// sample store's three years of data — Kettle & Co, five tables. ?api= points it elsewhere, for testing.
 (() => {
   const API = new URLSearchParams(location.search).get("api") || "https://workspace.d0d.ai";
   const form = document.getElementById("ask"), input = document.getElementById("q"), box = document.getElementById("answer");
@@ -526,7 +526,7 @@ document.getElementById("year").textContent = new Date().getFullYear();
     busy = true;
     if (typed && !still) { input.value = ""; for (const ch of question) { input.value += ch; await wait(28); } }
     else input.value = question;
-    box.replaceChildren(el("div", "wait", "Reading 2,000 orders…"));
+    box.replaceChildren(el("div", "wait", "Reading 964,000 orders…"));
     const t0 = performance.now();
     let res;
     try {
@@ -561,7 +561,11 @@ document.getElementById("year").textContent = new Date().getFullYear();
   new IntersectionObserver((seen, obs) => {
     if (!seen.some(s => s.isIntersecting)) return;
     obs.disconnect();
-    found.finally(() => setTimeout(() => { const b = chips.querySelector("button"); ask(b.dataset.q || b.textContent, true); }, 500));
+    // A change over time first: its answer can say why.
+    found.finally(() => setTimeout(() => {
+      const all = [...chips.querySelectorAll("button")], b = all.find(x => /trend|month/i.test(x.dataset.q || x.textContent)) || all[0];
+      ask(b.dataset.q || b.textContent, true);
+    }, 500));
   }, {threshold: .4}).observe(box);
 })();
 </script>
