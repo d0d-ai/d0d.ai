@@ -404,6 +404,13 @@ document.getElementById("year").textContent = new Date().getFullYear();
   function pairsOf(r) {
     const rows = r.rows || [];
     if (!rows.length) return {pairs: []};
+    // Two numbers per group: the one per the other — revenue per dollar of
+    // spend, orders per customer, refunds per order (a percent).
+    if (!rows[0].fields && rows.some(x => num(x.also) > 0)) {
+      const pairs = rows.filter(x => num(x.value) != null && num(x.also) > 0).map(x => ({label: String(x.key || "the rest"), value: num(x.value) / num(x.also)}));
+      const pct = pairs.every(p => p.value <= 1);
+      return {pct, ratio: true, pairs: pairs.map(p => ({label: p.label, value: pct ? 100 * p.value : p.value}))};
+    }
     if (!rows[0].fields) return {pairs: rows.map(x => ({label: String(x.key ?? "(empty)"), value: num(x.value)})).filter(p => p.value != null)};
     const cols = r.columns?.length ? r.columns : Object.keys(rows[0].fields);
     const pick = (label, value, pct) => ({pct, pairs: rows.map(x => ({label: String(x.fields[label] ?? "(empty)"), value: num(x.fields[value])})).filter(p => p.value != null)});
@@ -463,9 +470,9 @@ document.getElementById("year").textContent = new Date().getFullYear();
     if (!res.error) q.append(el("span", "fast", "⚡ " + (Math.max(ms, res.ms || 0) / 1000).toFixed(1) + "s"));
     box.append(q);
     if (res.error) { box.append(el("div", "note", res.error)); return; }
-    const r = res.result || {}, {pairs, pct} = pairsOf(r), head = el("div", "head");
+    const r = res.result || {}, {pairs, pct, ratio} = pairsOf(r), head = el("div", "head");
     const b = text => Object.assign(el("b"), {textContent: text});
-    const named = pct && pairs.find(p => new RegExp("\\b" + p.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\b", "i").test(res.question));
+    const named = pct && !ratio && pairs.find(p => new RegExp("\\b" + p.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\b", "i").test(res.question));
     if (r.count != null && !pairs.length) {
       box.append(head, el("div", "big", fmt(r.count)));
     } else if (pairs.length && pairs.every(p => isTime(p.label))) {
@@ -480,8 +487,8 @@ document.getElementById("year").textContent = new Date().getFullYear();
       box.append(head, bars(pairs, pct));
     } else if (pairs.length) {
       const top = pairs.reduce((a, c) => c.value > a.value ? c : a), total = pairs.reduce((t, p) => t + p.value, 0);
-      head.append(b(top.label), document.createTextNode(" leads with " + fmt(top.value, pct)));
-      if (!pct && total > 0 && pairs.length > 1) head.append(document.createTextNode(` — ${Math.round(100 * top.value / total)}% of the total`));
+      head.append(b(top.label), document.createTextNode(" leads with " + fmt(top.value, pct) + (ratio && /per dollar/i.test(res.question) ? "× its spend" : "")));
+      if (!pct && !ratio && total > 0 && pairs.length > 1) head.append(document.createTextNode(` — ${Math.round(100 * top.value / total)}% of the total`));
       box.append(head, bars(pairs, pct));
     } else {
       box.append(el("div", "note", "Nothing matched that — try one of the questions above."));
