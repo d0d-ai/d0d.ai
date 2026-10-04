@@ -41,9 +41,7 @@
   nav a { color: var(--soft); text-decoration: none; font-size: 15px; }
   nav a:hover { color: var(--fg); }
   .head-cta { margin-left: auto; display: flex; align-items: center; gap: 18px; }
-  .head-cta .signin { color: var(--soft); text-decoration: none; font-size: 15px; }
-  .head-cta .signin:hover { color: var(--fg); }
-  @media (max-width: 760px) { nav { display: none; } .head-cta .signin { display: none; } }
+  @media (max-width: 760px) { nav { display: none; } }
 
   /* buttons */
   .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border-radius: 11px; border: 0; cursor: pointer;
@@ -144,6 +142,17 @@
   .logos .pill img, .logos .pill svg { width: 16px; height: 16px; flex: none; }
   .logos .pill.more { border-style: dashed; color: var(--muted); }
   .logos .pill.hl { color: var(--fg); border-color: var(--accent); }
+  /* the zeros: what dOd doesn't need */
+  .zeros { padding: 64px 0; }
+  .zeros h2 { max-width: 24ch; }
+  .zgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+  @media (max-width: 980px) { .zgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 520px) { .zgrid { gap: 12px; } .zero { padding: 16px; } .zero .n { font-size: 48px; } .zero h3 { font-size: 17px; } .zero p { font-size: 14px; } }
+  .zero { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 22px 22px 24px; }
+  .zero .n { font: 700 64px/1 "Space Grotesk", system-ui, sans-serif; letter-spacing: -0.04em;
+             background: linear-gradient(120deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .zero h3 { font: 700 19px "Space Grotesk", system-ui, sans-serif; margin: 10px 0 6px; }
+  .zero p { color: var(--soft); margin: 0; font-size: 15px; }
 
   .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
   @media (max-width: 900px) { .split { grid-template-columns: minmax(0, 1fr); } }
@@ -209,14 +218,11 @@
   <div class="wrap">
     <a class="logo" href="/" aria-label="dOd home">d<b>O</b>d</a>
     <nav aria-label="Sections">
-      <a href="#ai">For agents</a>
       <a href="#how">How it works</a>
-      <a href="#uses">Use cases</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
     </nav>
     <div class="head-cta">
-      <a class="signin" href="https://workspace.d0d.ai/">Sign in</a>
       <a class="btn small" href="https://workspace.d0d.ai/">Try free</a>
     </div>
   </div>
@@ -232,7 +238,7 @@
         <a class="btn" href="https://workspace.d0d.ai/">Try it free — no card</a>
         <a class="or" href="#demo">or ask the live demo →</a>
       </div>
-      <div class="fine"><span>Works on TBs of data</span><span>Any agent: Claude, ChatGPT, your own</span><span>Zero AI token charges</span><span>Set up in two minutes</span></div>
+      <div class="fine"><span>Works on TBs of data</span><span>Any agent: Claude, ChatGPT, your own</span><span>Zero AI token charges</span><span>No GPUs</span><span>Set up in two minutes</span></div>
     </div>
 
     <div class="demo" id="demo" aria-label="Live demo: ask a sample coffee-gear store a question">
@@ -250,7 +256,7 @@
         </div>
         <div class="answer" id="answer" aria-live="polite"></div>
       </div>
-      <div class="demo-foot"><span>Three years of a made-up store: orders, items, customers, products, ad spend. Yours takes two minutes to connect.</span><a class="btn small" href="https://workspace.d0d.ai/">Ask your own data</a></div>
+      <div class="demo-foot"><span>Three years of a made-up store: orders, items, customers, products, ad spend. Yours takes two minutes to connect.</span></div>
     </div>
   </div>
 
@@ -264,6 +270,20 @@
     </div>
   </div>
 
+  <section class="zeros" aria-labelledby="zeros-h">
+    <div class="wrap">
+      <div class="kicker">The zeros</div>
+      <h2 id="zeros-h">Big data answers, without the big AI bill.</h2>
+      <p class="sub">The AI only plans the question. The work — reading, joining and adding up every row — is done by dOd's map-reduce engine.</p>
+      <div class="zgrid">
+        <div class="zero"><div class="n">0</div><h3>GPUs</h3><p>Terabytes are crunched on ordinary CPUs. No GPU cluster to rent, no model to host.</p></div>
+        <div class="zero"><div class="n">0</div><h3>rows sent to an AI</h3><p>Your tables never pass through a language model. Only the short answer goes back to your agent.</p></div>
+        <div class="zero"><div class="n">0</div><h3>AI token charges</h3><p>Read a kilobyte or a terabyte: no tokens are spent on your data. You pay for infrastructure, never per token.</p></div>
+        <div class="zero"><div class="n">0</div><h3>lines of SQL</h3><p>Agents and people ask in plain English; dOd writes the exact plan and shows how it got the answer.</p></div>
+      </div>
+    </div>
+  </section>
+
   <section id="ai">
     <div class="wrap split">
       <div>
@@ -271,7 +291,6 @@
         <h2>Your agents don't need SQL. They need English.</h2>
         <p class="sub">Connect any agent to dOd once. It asks in plain English, and dOd's embedded map-reduce model builder compiles the question straight into an exact plan — no text-to-SQL translation, no guessed joins — then runs it across terabytes of data. Only the short answer goes back to the agent.</p>
         <p class="sub">Your data never runs through a language model, so crunching terabytes costs zero AI tokens. You pay for infrastructure, never per token.</p>
-        <a class="btn ghost" href="https://workspace.d0d.ai/">Connect your agent</a>
       </div>
       <div class="chatlike" aria-label="Example agent conversation">
         <div class="kicker" style="font-size:11px;color:var(--muted)">Example</div>
