@@ -1,0 +1,23 @@
+# dOd
+
+> dOd is the big data platform for AI agents. Claude, ChatGPT or your own agents connect once and ask questions in plain English; dOd's embedded map-reduce model builder turns each question into an exact plan and runs it over the data where it lives, even terabytes. Only the short answer goes back to the agent.
+
+- No SQL: questions are compiled into exact plans, with no text-to-SQL translation and no guessed joins. dOd says how it worked out every answer.
+- No GPUs: the data is processed by a map-reduce engine on ordinary CPUs.
+- No rows sent to an AI: the language model only plans the question; tables never pass through it, so there are no AI token charges on the data.
+- Connects to Google Sheets, PostgreSQL, BigQuery, Amazon S3, Google Cloud Storage, Apache Iceberg, and CSV or Parquet uploads.
+- Works with ChatGPT and Claude, and any agent, over MCP.
+- Dashboards that stay up to date, team sharing, and charts shared as cards.
+
+## Pricing
+
+- Demo: free, no card. One workspace over a sample store.
+- Starter: $49/month ($490/year). Your own data, 3 editors, unlimited dashboard viewers.
+- Team: $149/month ($1,490/year). 3 workspaces, 10 editors.
+- Business: from $499/month. 10 workspaces, 25+ editors, dOd in your own cloud.
+
+## Links
+
+- [Home and live demo](https://d0d.ai/): ask a sample store (Kettle & Co, 630K rows in 5 tables) a question, no sign-up.
+- [Sign in or start free](https://workspace.d0d.ai/)
+- Contact: a@d0d.ai
