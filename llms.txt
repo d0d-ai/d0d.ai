@@ -20,4 +20,6 @@
 
 - [Home and live demo](https://d0d.ai/): ask a sample store (Kettle & Co, 630K rows in 5 tables) a question, no sign-up.
 - [Sign in or start free](https://workspace.d0d.ai/)
+- [Pricing](https://d0d.ai/pricing)
+- [Terms of Service](https://d0d.ai/terms), [Privacy Policy](https://d0d.ai/privacy), [Refund Policy](https://d0d.ai/refunds)
 - Contact: a@d0d.ai
