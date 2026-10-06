@@ -92,6 +92,14 @@
     },
     {
      "@type": "Question",
+     "name": "Is dOd just a text-to-SQL layer on top of my database?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. dOd is a distributed map-reduce engine we built from scratch, not a translator that hands SQL to your database. It reads your data where it lives and splits the work across many worker CPUs, at about 8 million records per second per CPU. If a worker is lost mid-job, its part is recomputed, so you still get the exact answer. The AI only plans the question; the engine does the reading, joining and adding up."
+     }
+    },
+    {
+     "@type": "Question",
      "name": "What can I connect?",
      "acceptedAnswer": {
       "@type": "Answer",
@@ -487,6 +495,7 @@
       <div class="kicker">FAQ</div>
       <h2>Questions, answered.</h2>
       <details><summary>Do my agents (or I) need to know SQL?</summary><p>No. Agents and people ask in plain English. dOd's embedded map-reduce model builder turns that into an exact plan — no translation to SQL, no guessing — and runs it over all your data, even terabytes. dOd shows how it worked out every answer in a sentence, so you can check it.</p></details>
+      <details><summary>Is dOd just a text-to-SQL layer on top of my database?</summary><p>No. dOd is a distributed map-reduce engine we built from scratch, not a translator that hands SQL to your database. It reads your data where it lives and splits the work across many worker CPUs, at about 8 million records per second per CPU. If a worker is lost mid-job, its part is recomputed, so you still get the exact answer. The AI only plans the question; the engine does the reading, joining and adding up.</p></details>
       <details><summary>What can I connect?</summary><p>Google Sheets, PostgreSQL, BigQuery, Amazon S3, Google Cloud Storage, Apache Iceberg, and CSV or Parquet file uploads. More sources are coming — tell us what you use.</p></details>
       <details><summary>Is my data safe?</summary><p>dOd reads your data where it lives instead of copying your database, and connection details are encrypted in your workspace. With Google Sheets, dOd can open only the spreadsheets you pick. Use a read-only login for databases.</p></details>
       <details><summary>Can my team use it?</summary><p>Yes. Invite editors who ask questions, and give everyone else a dashboard to view — dashboard viewers are unlimited on every paid plan.</p></details>
