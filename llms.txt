@@ -11,10 +11,13 @@
 
 ## Pricing
 
-- Demo: free, no card. One workspace over a sample store.
-- Starter: $49/month ($490/year). Your own data, 3 editors, unlimited dashboard viewers.
-- Team: $149/month ($1,490/year). 3 workspaces, 10 editors.
-- Business: from $499/month. 10 workspaces, 25+ editors, dOd in your own cloud.
+Priced in d0d Units (DU): one DU-hour is one worker CPU for one hour, billed per second with no minimum. Idle time, rejected plans and cached answers cost nothing, and there are no per-token AI charges.
+
+- Free: $0, no card. 50 DU-hours a month, one workspace, your own data. Stops at the limit.
+- Pro: $99/month. 600 DU-hours included, then $0.08 per DU-hour up to a spending cap. Unlimited users and agents.
+- Team: $499/month. 4,000 DU-hours included, then $0.07 per DU-hour. 5 workspaces, saved metrics, audit log, priority support.
+- Annual commitment: prepaid DU-hours at 20% off ($0.064), or reserved always-on workers at $0.05 per DU-hour.
+- Enterprise, in your own cloud: from $30K/year, $40 per worker CPU per month, minimum 64 CPUs.
 
 ## Links
 

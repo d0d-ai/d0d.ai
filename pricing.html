@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pricing — dOd</title>
-<meta name="description" content="dOd pricing: free demo, Starter $49/month, Team $149/month, Business from $499/month. No per-token AI charges.">
+<meta name="description" content="dOd pricing in d0d Units (DU): one worker CPU for one hour, billed per second. Free 50 DU-hours a month, Pro $99/month, Team $499/month, Enterprise in your own cloud. No per-token AI charges.">
 <link rel="canonical" href="https://d0d.ai/pricing">
 <meta name="color-scheme" content="dark">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -23,24 +23,51 @@
 <main>
   <div class="wrap">
     <div class="kicker">Pricing</div>
-    <h1>Start free. Upgrade when it's useful.</h1>
-    <p class="sub">Try everything on sample data for free. Connect your own data from $49 a month — cancel any time. No per-token AI charges: you pay for infrastructure, not for how much your agents ask.</p>
+    <h1>Pay only for the seconds your questions run.</h1>
+    <p class="sub">Priced in d0d Units (DU): one DU-hour is one worker CPU for one hour, about the price of a BigQuery slot. You pay only for the seconds your questions run, never for idle time, and never per AI token.</p>
     <div class="plans">
-      <div class="plan"><div class="tag"></div><h3>Demo</h3><div class="price">Free</div><div class="yr">no card needed</div>
-        <ul><li>One workspace</li><li>Ask the sample store in plain English</li><li>Dashboards and sharing</li><li>From ChatGPT and Claude too</li></ul>
+      <div class="plan"><div class="tag"></div><h3>Free</h3><div class="price">$0</div><div class="yr">no card needed</div>
+        <ul><li>50 DU-hours a month</li><li>Your own data, one workspace</li><li>ChatGPT, Claude and any agent over MCP</li><li>Stops at the limit, never billed</li></ul>
         <a class="btn ghost" href="https://workspace.d0d.ai/">Start free</a></div>
-      <div class="plan pick"><div class="tag">Most popular</div><h3>Starter</h3><div class="price">$49<small> / month</small></div><div class="yr">or $490 a year</div>
-        <ul><li>Your own data: Sheets, databases, warehouse, files</li><li>3 editors, unlimited dashboard viewers</li><li>ChatGPT and Claude on your data</li><li>Email support</li></ul>
+      <div class="plan pick"><div class="tag">Most popular</div><h3>Pro</h3><div class="price">$99<small> / month</small></div><div class="yr">600 DU-hours included</div>
+        <ul><li>Then $0.08 per DU-hour</li><li>A spending cap you set</li><li>One workspace</li><li>Unlimited users and agents</li></ul>
         <a class="btn" href="https://workspace.d0d.ai/">Get started</a></div>
-      <div class="plan"><div class="tag"></div><h3>Team</h3><div class="price">$149<small> / month</small></div><div class="yr">or $1,490 a year</div>
-        <ul><li>Everything in Starter</li><li>3 workspaces, 10 editors</li><li>More speed for bigger data</li><li>Support within a business day</li></ul>
+      <div class="plan"><div class="tag"></div><h3>Team</h3><div class="price">$499<small> / month</small></div><div class="yr">4,000 DU-hours included</div>
+        <ul><li>Then $0.07 per DU-hour, with a cap</li><li>5 workspaces</li><li>Saved metrics and audit log</li><li>Priority support</li></ul>
         <a class="btn ghost" href="https://workspace.d0d.ai/">Get started</a></div>
-      <div class="plan"><div class="tag"></div><h3>Business</h3><div class="price">from $499<small> / month</small></div><div class="yr">&nbsp;</div>
-        <ul><li>Everything in Team</li><li>10 workspaces, 25+ editors</li><li>dOd in your own cloud, invoicing</li><li>A setup call and a named contact</li></ul>
-        <a class="btn ghost" href="mailto:a@d0d.ai?subject=dOd%20Business">Talk to us</a></div>
+      <div class="plan"><div class="tag"></div><h3>Enterprise</h3><div class="price">from $30K<small> / year</small></div><div class="yr">in your own cloud</div>
+        <ul><li>$40 per worker CPU a month</li><li>From 64 CPUs</li><li>Your cloud, your cloud bill</li><li>A setup call and a named contact</li></ul>
+        <a class="btn ghost" href="mailto:a@d0d.ai?subject=dOd%20Enterprise">Talk to us</a></div>
     </div>
+    <p class="sub" style="margin:28px 0 0;font-size:16px">Annual commitment: prepay DU-hours at 20% off ($0.064 each), or reserve always-on workers at $0.05 per DU-hour. <a href="mailto:a@d0d.ai?subject=dOd%20annual%20commitment">Talk to us</a>.</p>
+
+    <div class="doc">
+      <h2>What is a DU?</h2>
+      <p>One <strong>d0d Unit (DU)</strong>-hour is one worker CPU running for one hour, with its memory, disk and network included. It's the same idea as a BigQuery slot or a Databricks DBU. What's different is what we don't bill:</p>
+      <ul>
+        <li><strong>Per second, no minimum.</strong> A 3-second question is billed for 3 seconds.</li>
+        <li><strong>$0 while idle.</strong> Workers shut down when there's no work.</li>
+        <li><strong>$0 for bad plans.</strong> They're rejected in microseconds, before any data is read.</li>
+        <li><strong>$0 for cached answers</strong> and dashboard refreshes of unchanged data.</li>
+        <li><strong>$0 for planning.</strong> The model that plans your question runs inside dOd, so there are no per-token AI charges.</li>
+      </ul>
+      <p>A rule of thumb: a simple filter or count over 1 billion records takes about 2 DU-minutes, roughly a third of a cent. Joins and percentiles use more.</p>
+
+      <h2>How it compares</h2>
+      <div class="tablewrap"><table>
+        <thead><tr><th></th><th>Unit</th><th>List price</th><th>Billing</th></tr></thead>
+        <tbody>
+          <tr><th>dOd</th><td>DU: 1 worker CPU-hour</td><td>$0.08 per DU-hour</td><td>Per second, no minimum, $0 idle, $0 for rejected plans</td></tr>
+          <tr><th>BigQuery</th><td>Slot: 1 virtual CPU-hour</td><td>$0.04–0.10 per slot-hour, or $6.25 per TiB scanned</td><td>1-minute minimum; capacity plans start at 50 slots</td></tr>
+          <tr><th>Databricks</th><td>DBU-hour</td><td>About $0.22–0.55 per DBU, plus cloud servers billed separately</td><td>A small cluster uses about 5 DBUs an hour while it runs</td></tr>
+          <tr><th>Snowflake</th><td>Credit</td><td>About $2–4 per credit; the smallest warehouse uses 1 an hour</td><td>60-second minimum each time a warehouse starts</td></tr>
+        </tbody>
+      </table></div>
+      <p class="updated">Competitor list prices as of October 2026. dOd adds no query or scan charges, but reading BigQuery tables uses Google's Storage Read API, which Google bills you a small per-TiB fee for.</p>
+    </div>
+
     <div class="doc notes">
-      <p>Prices are in US dollars. Sales tax or VAT is added at checkout where it applies. Subscriptions renew automatically each month or year until cancelled; cancel any time from your billing page and keep access until the end of the period you paid for.</p>
+      <p>Prices are in US dollars. Sales tax or VAT is added at checkout where it applies. Subscriptions renew automatically each month until cancelled. DU-hours beyond your plan are billed at the end of the month, never past the spending cap you set; cancel any time from your billing page and keep access until the end of the period you paid for.</p>
       <p>Payments are processed by our reseller and Merchant of Record, Paddle.com. See the <a href="/terms">Terms of Service</a>, <a href="/privacy">Privacy Policy</a> and <a href="/refunds">Refund Policy</a>.</p>
     </div>
   </div>

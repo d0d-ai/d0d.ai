@@ -58,28 +58,21 @@
    "offers": [
     {
      "@type": "Offer",
-     "name": "Demo",
+     "name": "Free",
      "price": "0",
      "priceCurrency": "USD",
      "url": "https://workspace.d0d.ai/"
     },
     {
      "@type": "Offer",
-     "name": "Starter",
-     "price": "49",
+     "name": "Pro",
+     "price": "99",
      "priceCurrency": "USD",
      "url": "https://workspace.d0d.ai/"
     },
     {
      "@type": "Offer",
      "name": "Team",
-     "price": "149",
-     "priceCurrency": "USD",
-     "url": "https://workspace.d0d.ai/"
-    },
-    {
-     "@type": "Offer",
-     "name": "Business",
      "price": "499",
      "priceCurrency": "USD",
      "url": "https://workspace.d0d.ai/"
@@ -126,7 +119,7 @@
      "name": "What does it cost?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "The demo is free with no card. Connecting your own data starts at $49 a month, or $490 a year. Change plans or cancel any time from your billing page. There are no per-token AI charges — you pay for infrastructure only."
+      "text": "Free gives you 50 DU-hours a month on your own data, no card. Pro is $99 a month with 600 DU-hours, then $0.08 per DU-hour up to a cap you set. One DU-hour is one worker CPU for one hour, billed per second; a simple count over a billion records takes about 2 DU-minutes. Idle time, rejected plans and cached answers cost nothing, and there are no per-token AI charges."
      }
     }
    ]
@@ -469,22 +462,23 @@
   <section id="pricing">
     <div class="wrap">
       <div class="kicker">Pricing</div>
-      <h2>Start free. Upgrade when it's useful.</h2>
-      <p class="sub">Try everything on sample data for free. Connect your own data from $49 a month — cancel any time. No per-token AI charges: you pay for infrastructure, not for how much your agents ask.</p>
+      <h2>Pay only for the seconds your questions run.</h2>
+      <p class="sub">Priced in d0d Units (DU): one DU-hour is one worker CPU for one hour, about the price of a BigQuery slot. You pay only for the seconds your questions run, never for idle time, and never per AI token.</p>
       <div class="plans">
-        <div class="plan"><div class="tag"></div><h3>Demo</h3><div class="price">Free</div><div class="yr">no card needed</div>
-          <ul><li>One workspace</li><li>Ask the sample store in plain English</li><li>Dashboards and sharing</li><li>From ChatGPT and Claude too</li></ul>
+        <div class="plan"><div class="tag"></div><h3>Free</h3><div class="price">$0</div><div class="yr">no card needed</div>
+          <ul><li>50 DU-hours a month</li><li>Your own data, one workspace</li><li>ChatGPT, Claude and any agent over MCP</li><li>Stops at the limit, never billed</li></ul>
           <a class="btn ghost" href="https://workspace.d0d.ai/">Start free</a></div>
-        <div class="plan pick"><div class="tag">Most popular</div><h3>Starter</h3><div class="price">$49<small> / month</small></div><div class="yr">or $490 a year</div>
-          <ul><li>Your own data: Sheets, databases, warehouse, files</li><li>3 editors, unlimited dashboard viewers</li><li>ChatGPT and Claude on your data</li><li>Email support</li></ul>
+        <div class="plan pick"><div class="tag">Most popular</div><h3>Pro</h3><div class="price">$99<small> / month</small></div><div class="yr">600 DU-hours included</div>
+          <ul><li>Then $0.08 per DU-hour</li><li>A spending cap you set</li><li>One workspace</li><li>Unlimited users and agents</li></ul>
           <a class="btn" href="https://workspace.d0d.ai/">Get started</a></div>
-        <div class="plan"><div class="tag"></div><h3>Team</h3><div class="price">$149<small> / month</small></div><div class="yr">or $1,490 a year</div>
-          <ul><li>Everything in Starter</li><li>3 workspaces, 10 editors</li><li>More speed for bigger data</li><li>Support within a business day</li></ul>
+        <div class="plan"><div class="tag"></div><h3>Team</h3><div class="price">$499<small> / month</small></div><div class="yr">4,000 DU-hours included</div>
+          <ul><li>Then $0.07 per DU-hour, with a cap</li><li>5 workspaces</li><li>Saved metrics and audit log</li><li>Priority support</li></ul>
           <a class="btn ghost" href="https://workspace.d0d.ai/">Get started</a></div>
-        <div class="plan"><div class="tag"></div><h3>Business</h3><div class="price">from $499<small> / month</small></div><div class="yr">&nbsp;</div>
-          <ul><li>Everything in Team</li><li>10 workspaces, 25+ editors</li><li>dOd in your own cloud, invoicing</li><li>A setup call and a named contact</li></ul>
-          <a class="btn ghost" href="mailto:a@d0d.ai?subject=dOd%20Business">Talk to us</a></div>
+        <div class="plan"><div class="tag"></div><h3>Enterprise</h3><div class="price">from $30K<small> / year</small></div><div class="yr">in your own cloud</div>
+          <ul><li>$40 per worker CPU a month</li><li>From 64 CPUs</li><li>Your cloud, your cloud bill</li><li>A setup call and a named contact</li></ul>
+          <a class="btn ghost" href="mailto:a@d0d.ai?subject=dOd%20Enterprise">Talk to us</a></div>
       </div>
+      <p class="sub" style="margin:28px 0 0;font-size:16px">Billed per second, no minimum. Rejected plans and cached answers cost $0. <a href="/pricing">How the DU works and how it compares</a>.</p>
     </div>
   </section>
 
@@ -496,7 +490,7 @@
       <details><summary>What can I connect?</summary><p>Google Sheets, PostgreSQL, BigQuery, Amazon S3, Google Cloud Storage, Apache Iceberg, and CSV or Parquet file uploads. More sources are coming — tell us what you use.</p></details>
       <details><summary>Is my data safe?</summary><p>dOd reads your data where it lives instead of copying your database, and connection details are encrypted in your workspace. With Google Sheets, dOd can open only the spreadsheets you pick. Use a read-only login for databases.</p></details>
       <details><summary>Can my team use it?</summary><p>Yes. Invite editors who ask questions, and give everyone else a dashboard to view — dashboard viewers are unlimited on every paid plan.</p></details>
-      <details><summary>What does it cost?</summary><p>The demo is free with no card. Connecting your own data starts at $49 a month, or $490 a year. Change plans or cancel any time from your billing page. There are no per-token AI charges — you pay for infrastructure only.</p></details>
+      <details><summary>What does it cost?</summary><p>Free gives you 50 DU-hours a month on your own data, no card. Pro is $99 a month with 600 DU-hours, then $0.08 per DU-hour up to a cap you set. One DU-hour is one worker CPU for one hour, billed per second; a simple count over a billion records takes about 2 DU-minutes. Idle time, rejected plans and cached answers cost nothing, and there are no per-token AI charges.</p></details>
     </div>
   </section>
 
