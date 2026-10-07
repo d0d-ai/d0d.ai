@@ -169,10 +169,10 @@
   .btn.ghost:hover { border-color: var(--accent); background: transparent; }
 
   /* hero */
-  .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr); gap: 56px; align-items: center; padding: 64px 24px 72px; }
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr); gap: 56px; align-items: start; padding: 64px 24px 72px; }
   @media (max-width: 980px) { .hero { grid-template-columns: minmax(0, 1fr); gap: 40px; padding-top: 44px; } }
   .eyebrow { display: inline-flex; align-items: center; gap: 10px; font: 500 13px/1 "JetBrains Mono", monospace;
-             letter-spacing: .12em; text-transform: uppercase; color: var(--good); }
+             letter-spacing: .12em; text-transform: uppercase; color: var(--good); margin-top: 14px; }
   .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--good); animation: pulse 2s ease-in-out infinite; }
   @keyframes pulse { 50% { opacity: .3; } }
   h1 { font: 700 clamp(38px, 5vw, 60px)/1.05 "Space Grotesk", system-ui, sans-serif; letter-spacing: -0.03em; margin: 20px 0 20px; }
