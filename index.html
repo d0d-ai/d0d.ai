@@ -189,7 +189,7 @@
   .demo-top { display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--line);
               font: 500 12px "JetBrains Mono", monospace; color: var(--muted); }
   .demo-top .live { display: inline-flex; align-items: center; gap: 7px; color: var(--good); letter-spacing: .08em; text-transform: uppercase; }
-  .demo-top .live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--good); animation: pulse 2s ease-in-out infinite; }
+  .demo-top .live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--good); }
   .demo-top .what { margin-left: auto; }
   .demo-body { padding: 18px; }
   .ask { display: flex; gap: 8px; align-items: center; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 6px 6px 6px 14px; }
@@ -353,27 +353,27 @@
       <p class="lede">Connect Claude, ChatGPT or your own agents to your data. They ask in plain English; dOd's embedded map-reduce model builder turns the question into an exact plan and runs it over terabytes. No SQL. No translation. No guessing.</p>
       <div class="cta-row">
         <a class="btn" href="https://workspace.d0d.ai/">Try it free — no card</a>
-        <a class="or" href="#demo">or ask the live demo →</a>
+        <a class="or" href="#demo">or watch the demo →</a>
       </div>
       <div class="fine"><span>Works on TBs of data</span><span>Any agent: Claude, ChatGPT, your own</span><span>Zero AI token charges</span><span>No GPUs</span><span>Set up in two minutes</span></div>
     </div>
 
-    <div class="demo" id="demo" aria-label="Live demo: ask a sample coffee-gear store a question">
-      <div class="demo-top"><span class="live">Live</span><span class="what">Kettle &amp; Co, a sample store · 630K rows · 5 tables</span></div>
+    <div class="demo" id="demo" aria-label="Demo: questions asked of a sample coffee-gear store">
+      <div class="demo-top"><span class="live">Demo</span><span class="what">Kettle &amp; Co, a sample store · 630K rows · 5 tables</span></div>
       <div class="demo-body">
         <form class="ask" id="ask" autocomplete="off">
-          <input id="q" maxlength="200" placeholder="Ask anything — like “revenue per city”" aria-label="Ask the sample store a question">
-          <button class="btn small" id="go">Ask</button>
+          <input id="q" readonly placeholder="Pick a question below" aria-label="The question asked">
         </form>
         <div class="chips" aria-label="Questions to try">
-          <button type="button">How is revenue trending month by month?</button>
-          <button type="button">Which city has the highest share of refunded orders?</button>
-          <button type="button">revenue per utm_source</button>
-          <button type="button">How many customers came back more than once?</button>
+          <button type="button" class="found" data-q="How is revenue trending month by month?"><b>Revenue down 12% in Sep 2026</b><span>How is revenue trending month by month?</span></button>
+          <button type="button" class="found" data-q="Which device brings the most revenue?"><b>Mobile brings 55% of revenue</b><span>Which device brings the most revenue?</span></button>
+          <button type="button" class="found" data-q="Which city brings the most revenue?"><b>New York brings 15% of revenue</b><span>Which city brings the most revenue?</span></button>
+          <button type="button" class="found" data-q="Which city has the highest share of refunded orders?"><b>4% of orders are refunded</b><span>Which city has the highest share of refunded orders?</span></button>
+          <button type="button" class="found" data-q="How many customers came back more than once?"><b>31,433 customers came back</b><span>How many customers came back more than once?</span></button>
         </div>
         <div class="answer" id="answer" aria-live="polite"></div>
       </div>
-      <div class="demo-foot"><span>Three years of a made-up store: orders, items, customers, products, ad spend. Yours takes two minutes to connect.</span></div>
+      <div class="demo-foot"><span>Answers dOd gave on three years of a made-up store: orders, items, customers, products, ad spend. Ask your own in a free workspace — it takes two minutes to connect.</span></div>
     </div>
   </div>
 
@@ -531,10 +531,10 @@
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
 
-// The live demo: questions go to dOd's public demo workspace, which answers a
-// sample store's three years of data — Kettle & Co, five tables. ?api= points it elsewhere, for testing.
+// The demo replays answers dOd gave on a sample store — Kettle & Co, five
+// tables — recorded in demo.json, so it never waits on a live workspace.
 (() => {
-  const API = new URLSearchParams(location.search).get("api") || "https://workspace.d0d.ai";
+  const recorded = fetch("demo.json").then(r => r.json());
   const form = document.getElementById("ask"), input = document.getElementById("q"), box = document.getElementById("answer");
   const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const wait = ms => new Promise(r => setTimeout(r, still ? 0 : ms));
@@ -612,11 +612,11 @@ document.getElementById("year").textContent = new Date().getFullYear();
     return svg;
   }
 
-  function render(res, ms) {
+  function render(res) {
     box.replaceChildren();
     const q = el("div", "q");
     q.append(el("span", "", "“" + res.question + "”"));
-    if (!res.error) q.append(el("span", "fast", "⚡ " + (Math.max(ms, res.ms || 0) / 1000).toFixed(1) + "s"));
+
     box.append(q);
     if (res.error) { box.append(el("div", "note", res.error)); return; }
     const r = res.result || {}, {pairs, pct, ratio} = pairsOf(r), head = el("div", "head");
@@ -658,8 +658,8 @@ document.getElementById("year").textContent = new Date().getFullYear();
   async function explain(question, btn) {
     btn.disabled = true; btn.textContent = "Comparing every country, category and channel…";
     let res;
-    try { res = await (await fetch(API + "/try", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({question, why: true})})).json(); }
-    catch { res = {error: "The live demo is taking a break — try again in a moment."}; }
+    await wait(900);
+    try { res = (await recorded).why[question] || {}; } catch { res = {error: "The demo didn't load — refresh the page."}; }
     const w = el("div", "why");
     if (res.error || !res.headline) { w.append(el("div", "note", res.error || "Nothing to explain there.")); btn.replaceWith(w); return; }
     const [head, sub] = res.headline.split("\n").map(months), wh = el("div", "wh", head);
@@ -683,34 +683,17 @@ document.getElementById("year").textContent = new Date().getFullYear();
     if (typed && !still) { input.value = ""; for (const ch of question) { input.value += ch; await wait(28); } }
     else input.value = question;
     box.replaceChildren(el("div", "wait", "Reading 964,000 orders…"));
-    const t0 = performance.now();
+    await wait(700);
     let res;
-    try {
-      const r = await fetch(API + "/try", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({question})});
-      res = await r.json();
-    } catch {
-      res = {question, error: "The live demo is taking a break. Try it in your own free workspace instead — it takes a minute."};
-    }
-    res.question = res.question || question;
-    render(res, performance.now() - t0);
+    try { res = {...(await recorded).answers[question]}; } catch { res = {error: "The demo didn't load — refresh the page."}; }
+    res.question = question;
+    render(res);
     busy = false;
   }
-  form.addEventListener("submit", e => { e.preventDefault(); ask(input.value); });
+  form.addEventListener("submit", e => e.preventDefault());
   const chips = document.querySelector(".chips");
   const wire = () => chips.querySelectorAll("button").forEach(btn => btn.onclick = () => ask(btn.dataset.q || btn.textContent));
   wire();
-
-  // What dOd found in the store before anyone asked: the questions worth
-  // asking, each leading with its answer. The fixed ones stay if it cannot say.
-  const found = fetch(API + "/try/findings").then(r => r.json()).then(({findings}) => {
-    if (!findings?.length) return;
-    chips.replaceChildren(...findings.map(f => {
-      const b = el("button", "found"); b.type = "button"; b.dataset.q = f.text;
-      b.append(el("b", "", months(f.found.charAt(0).toUpperCase() + f.found.slice(1))), el("span", "", f.text));
-      return b;
-    }));
-    wire();
-  }).catch(() => {});
 
   // The first answer asks itself, once the demo is on screen: a visitor sees
   // dOd work before deciding to type anything.
@@ -718,10 +701,10 @@ document.getElementById("year").textContent = new Date().getFullYear();
     if (!seen.some(s => s.isIntersecting)) return;
     obs.disconnect();
     // A change over time first: its answer can say why.
-    found.finally(() => setTimeout(() => {
+    setTimeout(() => {
       const all = [...chips.querySelectorAll("button")], b = all.find(x => /trend|month/i.test(x.dataset.q || x.textContent)) || all[0];
       ask(b.dataset.q || b.textContent, true);
-    }, 500));
+    }, 500);
   }, {threshold: .4}).observe(box);
 })();
 </script>
