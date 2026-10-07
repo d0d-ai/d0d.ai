@@ -11,11 +11,11 @@
 <meta property="og:url" content="https://d0d.ai/">
 <meta property="og:title" content="dOd — The big data platform for AI agents">
 <meta property="og:description" content="Your agents speak English. dOd turns it into exact answers over terabytes of data. No SQL, no translation, no guessing.">
-<meta property="og:image" content="https://d0d.ai/og.png">
+<meta property="og:image" content="https://d0d.ai/og.png?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://d0d.ai/og.png">
+<meta name="twitter:image" content="https://d0d.ai/og.png?v=2">
 <meta name="color-scheme" content="dark">
 <meta name="twitter:title" content="dOd — The big data platform for AI agents">
 <meta name="twitter:description" content="Your agents speak English. dOd turns it into exact answers over terabytes of data. No SQL, no GPUs, no AI token charges on your data.">
@@ -54,7 +54,7 @@
    "publisher": {
     "@id": "https://d0d.ai/#org"
    },
-   "image": "https://d0d.ai/og.png",
+   "image": "https://d0d.ai/og.png?v=2",
    "offers": [
     {
      "@type": "Offer",
@@ -315,20 +315,42 @@
   footer a:hover { color: var(--fg); }
   footer .right { margin-left: auto; }
   @media (prefers-reduced-motion: reduce) { .eyebrow::before, .demo-top .live::before, .answer .wait::before { animation: none; } .bars .br { transition: none; } }
+  /* the engine diagram: agent → plan → workers → data, answer back */
+  .flow { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); align-items: stretch; gap: 0 10px; }
+  .node { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+  .node.hl { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+  .node .step { font: 500 12px "JetBrains Mono", monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+  .node h3 { font: 700 19px "Space Grotesk", system-ui, sans-serif; margin: 0; }
+  .node p { color: var(--soft); font-size: 14px; margin: 0; }
+  .node .say { background: #2F4FD8; color: #fff; border-radius: 12px 12px 4px 12px; padding: 9px 12px; font-size: 14px; }
+  .node .who { display: flex; gap: 8px; }
+  .node .who img { width: 20px; height: 20px; }
+  .node pre { margin: 0; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font: 500 12px/1.7 "JetBrains Mono", monospace; color: var(--soft); white-space: pre-wrap; }
+  .node pre b { color: var(--accent-2); font-weight: 600; }
+  .workers { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; }
+  .workers i { aspect-ratio: 1; border-radius: 4px; background: var(--panel-2); border: 1px solid var(--line); animation: work 2.4s ease-in-out infinite; }
+  .workers i:nth-child(3n+1) { animation-delay: .4s; } .workers i:nth-child(4n+2) { animation-delay: .9s; } .workers i:nth-child(5n+3) { animation-delay: 1.5s; }
+  @keyframes work { 0%, 100% { background: var(--panel-2); } 45% { background: var(--accent); border-color: var(--accent); } }
+  .stores { display: grid; gap: 6px; }
+  .stores span { display: flex; align-items: center; gap: 8px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px; font-size: 13px; color: var(--soft); }
+  .stores img { width: 16px; height: 16px; }
+  .stores small { margin-left: auto; color: var(--muted); font: 500 12px "JetBrains Mono", monospace; }
+  .arrow { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: var(--accent); font-size: 22px; }
+  .arrow small { color: var(--muted); font: 500 11px "JetBrains Mono", monospace; text-align: center; max-width: 9ch; line-height: 1.3; }
+  .back { margin-top: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; background: var(--panel); border: 1px dashed var(--good); border-radius: 14px; padding: 14px 18px; color: var(--fg); }
+  .back b { color: var(--good); font: 600 13px "JetBrains Mono", monospace; }
+  .back small { color: var(--muted); font: 500 12px "JetBrains Mono", monospace; margin-left: auto; }
+  @media (max-width: 980px) {
+    .flow { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+    .arrow { flex-direction: row; font-size: 0; padding: 4px 0; }
+    .arrow::before { content: "↓"; font-size: 22px; }
+    .arrow small { max-width: none; }
+    .back small { margin-left: 0; }
+    .workers { grid-template-columns: repeat(9, 1fr); }
+  }
+  @media (prefers-reduced-motion: reduce) { .workers i { animation: none; } }
 </style>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
-  getAnalytics(initializeApp({
-    apiKey: "AIzaSyBFtR8VVwOWFk2R0olHZd5aoNK0hfdFbaw",
-    authDomain: "d0d-gcp-workspace.firebaseapp.com",
-    projectId: "d0d-gcp-workspace",
-    storageBucket: "d0d-gcp-workspace.firebasestorage.app",
-    messagingSenderId: "692100161813",
-    appId: "1:692100161813:web:0f77756ab7d8b34fe4491c",
-    measurementId: "G-N7ZT2ZDNQ1"
-  }));
-</script>
+<script type="module" src="/analytics.js"></script>
 </head>
 <body>
 <header>
@@ -380,17 +402,17 @@
   <div class="logos">
     <div class="wrap">
       <span class="label">Data sources</span>
-      <span class="pill"><img src="https://cdn.simpleicons.org/googlesheets/B9C0D0" alt="">Google Sheets</span><span class="pill"><img src="https://cdn.simpleicons.org/postgresql/B9C0D0" alt="">PostgreSQL</span><span class="pill"><img src="https://cdn.simpleicons.org/googlebigquery/B9C0D0" alt="">BigQuery</span>
-      <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5l2 14c.3 1.7 2.9 3 6 3s5.7-1.3 6-3l2-14"/></svg>Amazon S3</span><span class="pill"><img src="https://cdn.simpleicons.org/googlecloudstorage/B9C0D0" alt="">Google Cloud Storage</span><span class="pill"><img src="https://cdn.simpleicons.org/apache/B9C0D0" alt="">Apache Iceberg</span>
-      <span class="pill"><img src="https://cdn.simpleicons.org/apacheparquet/B9C0D0" alt="">CSV &amp; Parquet uploads</span>
-      <span class="pill"><img src="https://cdn.simpleicons.org/snowflake/B9C0D0" alt="">Snowflake</span><span class="pill"><img src="https://cdn.simpleicons.org/databricks/B9C0D0" alt="">Databricks</span><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5l2 14c.3 1.7 2.9 3 6 3s5.7-1.3 6-3l2-14"/></svg>Amazon Redshift</span><span class="pill"><img src="https://cdn.simpleicons.org/clickhouse/B9C0D0" alt="">ClickHouse</span>
-      <span class="pill"><img src="https://cdn.simpleicons.org/mysql/B9C0D0" alt="">MySQL</span><span class="pill"><img src="https://cdn.simpleicons.org/mongodb/B9C0D0" alt="">MongoDB</span><span class="pill"><img src="https://cdn.simpleicons.org/elasticsearch/B9C0D0" alt="">Elasticsearch</span><span class="pill"><img src="https://cdn.simpleicons.org/duckdb/B9C0D0" alt="">DuckDB</span>
-      <span class="pill"><img src="https://cdn.simpleicons.org/apachekafka/B9C0D0" alt="">Apache Kafka</span><span class="pill"><img src="https://cdn.simpleicons.org/apachespark/B9C0D0" alt="">Apache Spark</span><span class="pill"><img src="https://cdn.simpleicons.org/trino/B9C0D0" alt="">Trino</span><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5l2 14c.3 1.7 2.9 3 6 3s5.7-1.3 6-3l2-14"/></svg>Delta Lake</span><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5l2 14c.3 1.7 2.9 3 6 3s5.7-1.3 6-3l2-14"/></svg>Azure Data Lake</span>
+      <span class="pill"><img src="/icons/googlesheets.svg" alt="">Google Sheets</span><span class="pill"><img src="/icons/postgresql.svg" alt="">PostgreSQL</span><span class="pill"><img src="/icons/googlebigquery.svg" alt="">BigQuery</span>
+      <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5l2 14c.3 1.7 2.9 3 6 3s5.7-1.3 6-3l2-14"/></svg>Amazon S3</span><span class="pill"><img src="/icons/googlecloudstorage.svg" alt="">Google Cloud Storage</span><span class="pill"><img src="/icons/apache.svg" alt="">Apache Iceberg</span>
+      <span class="pill"><img src="/icons/apacheparquet.svg" alt="">CSV &amp; Parquet uploads</span>
+      <span class="pill"><img src="/icons/snowflake.svg" alt="">Snowflake</span><span class="pill"><img src="/icons/databricks.svg" alt="">Databricks</span><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5l2 14c.3 1.7 2.9 3 6 3s5.7-1.3 6-3l2-14"/></svg>Amazon Redshift</span><span class="pill"><img src="/icons/clickhouse.svg" alt="">ClickHouse</span>
+      <span class="pill"><img src="/icons/mysql.svg" alt="">MySQL</span><span class="pill"><img src="/icons/mongodb.svg" alt="">MongoDB</span><span class="pill"><img src="/icons/elasticsearch.svg" alt="">Elasticsearch</span><span class="pill"><img src="/icons/duckdb.svg" alt="">DuckDB</span>
+      <span class="pill"><img src="/icons/apachekafka.svg" alt="">Apache Kafka</span><span class="pill"><img src="/icons/apachespark.svg" alt="">Apache Spark</span><span class="pill"><img src="/icons/trino.svg" alt="">Trino</span><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5l2 14c.3 1.7 2.9 3 6 3s5.7-1.3 6-3l2-14"/></svg>Delta Lake</span><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5l2 14c.3 1.7 2.9 3 6 3s5.7-1.3 6-3l2-14"/></svg>Azure Data Lake</span>
       <span class="pill more">+ many more</span>
     </div>
     <div class="wrap" style="margin-top:14px">
       <span class="label">Agents</span>
-      <span class="pill hl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>ChatGPT</span><span class="pill hl"><img src="https://cdn.simpleicons.org/claude/B9C0D0" alt="">Claude</span><span class="pill hl"><img src="https://cdn.simpleicons.org/cursor/B9C0D0" alt="">Cursor</span><span class="pill hl"><img src="https://cdn.simpleicons.org/githubcopilot/B9C0D0" alt="">GitHub Copilot</span><span class="pill hl"><img src="https://cdn.simpleicons.org/windsurf/B9C0D0" alt="">Windsurf</span><span class="pill hl"><img src="https://cdn.simpleicons.org/googlegemini/B9C0D0" alt="">Gemini</span><span class="pill hl"><img src="https://cdn.simpleicons.org/n8n/B9C0D0" alt="">n8n</span><span class="pill hl"><img src="https://cdn.simpleicons.org/langchain/B9C0D0" alt="">LangChain</span>
+      <span class="pill hl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg>ChatGPT</span><span class="pill hl"><img src="/icons/claude.svg" alt="">Claude</span><span class="pill hl"><img src="/icons/cursor.svg" alt="">Cursor</span><span class="pill hl"><img src="/icons/githubcopilot.svg" alt="">GitHub Copilot</span><span class="pill hl"><img src="/icons/windsurf.svg" alt="">Windsurf</span><span class="pill hl"><img src="/icons/googlegemini.svg" alt="">Gemini</span><span class="pill hl"><img src="/icons/n8n.svg" alt="">n8n</span><span class="pill hl"><img src="/icons/langchain.svg" alt="">LangChain</span>
       <span class="pill more">+ any MCP client</span>
     </div>
   </div>
@@ -424,6 +446,49 @@
         <div class="bubble you">Break Brazil down by device.</div>
         <div class="bubble ai">Mobile drove 78% of Brazil's growth; desktop was flat.<small>answered by dOd · map-reduce over 2.1 TB</small></div>
       </div>
+    </div>
+  </section>
+
+  <section id="engine">
+    <div class="wrap">
+      <div class="kicker">Under the hood</div>
+      <h2>English in. Bytes crunched. One exact answer out.</h2>
+      <p class="sub">dOd isn't a chatbot reading your tables, and it isn't text-to-SQL. It compiles the question into a plan, then its own distributed engine reads the raw data where it lives and computes the answer.</p>
+      <div class="flow">
+        <div class="node">
+          <div class="step">01 · Your agent</div>
+          <div class="who"><img src="/icons/claude.svg" alt=""><img src="/icons/cursor.svg" alt=""><img src="/icons/githubcopilot.svg" alt=""><img src="/icons/googlegemini.svg" alt=""></div>
+          <div class="say">Across last quarter's events, which 3 countries grew fastest?</div>
+          <p>Claude, ChatGPT, Cursor or your own agent asks in plain English.</p>
+        </div>
+        <div class="arrow" aria-hidden="true"><small>English, over MCP</small>→</div>
+        <div class="node">
+          <div class="step">02 · dOd plans it</div>
+          <pre><b>read</b>  events/*.parquet
+<b>keep</b>  last 2 quarters
+<b>group</b> country
+<b>count</b> per quarter
+<b>rank</b>  growth, top 3</pre>
+          <p>The embedded model builder compiles the question into an exact map-reduce plan. No SQL, no guessed joins.</p>
+        </div>
+        <div class="arrow" aria-hidden="true"><small>plan to every worker</small>→</div>
+        <div class="node hl">
+          <div class="step">03 · Distributed engine</div>
+          <div class="workers" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <p>Built from scratch: the plan is split across many CPUs, each reading its slice of the raw bytes and computing its part. The parts reduce to one exact answer.</p>
+        </div>
+        <div class="arrow" aria-hidden="true"><small>reads directly</small>→</div>
+        <div class="node">
+          <div class="step">04 · Your data, in place</div>
+          <div class="stores">
+            <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5l2 14c.3 1.7 2.9 3 6 3s5.7-1.3 6-3l2-14"/></svg>Amazon S3<small>2.1 TB</small></span>
+            <span><img src="/icons/googlebigquery.svg" alt="">BigQuery</span>
+            <span><img src="/icons/postgresql.svg" alt="">PostgreSQL</span>
+          </div>
+          <p>Nothing is copied or exported, and no rows are ever sent to a language model.</p>
+        </div>
+      </div>
+      <div class="back"><b>← only the answer goes back</b><span>Brazil +41%, India +33%, Poland +27%</span><small>3.8B events · 2.1 TB read · 0 rows to the AI · 0 tokens on the data</small></div>
     </div>
   </section>
 
