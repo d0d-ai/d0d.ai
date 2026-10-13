@@ -21,9 +21,20 @@ for (const a of document.querySelectorAll('a[href^="https://workspace.d0d.ai"]')
   a.href = url;
 }
 
+// A call to action says which intent it is (data-intent: demo, signup,
+// signup_demo, mcp, docs), so demo, sign-up, docs and MCP interest count apart.
 document.addEventListener("click", e => {
   const a = e.target.closest("a");
   if (!a) return;
+  const intent = a.dataset.intent;
+  if (intent) logEvent(analytics, "cta_click", {intent, page: location.pathname});
   const event = a.href.startsWith("https://workspace.d0d.ai") ? "workspace_click" : a.href.startsWith("mailto:") ? "contact_click" : null;
-  if (event) logEvent(analytics, event, {link_text: a.textContent.trim().slice(0, 60), page: location.pathname});
+  if (event) logEvent(analytics, event, {link_text: a.textContent.trim().slice(0, 60), page: location.pathname, ...(intent && {intent})});
 });
+
+// The page's own events (the demo's: demo_question, demo_answer), queued
+// until this module loads. What a visitor typed is never among them: only
+// how they asked (chip, typed, meaning) and how it went.
+const send = (event, params = {}) => logEvent(analytics, event, {...params, page: location.pathname});
+for (const [event, params] of (window.siteQ || []).splice(0)) send(event, params);
+window.siteTrack = send;

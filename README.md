@@ -9,10 +9,18 @@ previews show, the icons, and what search engines and AI search read:
 (`utm_*`, `gclid`, ...) onto workspace links, and logs clicks to the workspace
 and to email. Logo icons are self-hosted in `icons/`; `404.html` is GitHub Pages'
 not-found page. The page's structured data (JSON-LD in its head) repeats the FAQ
-and pricing: change them together. The hero's demo replays answers recorded from dOd's
-public demo workspace (`https://workspace.d0d.ai/try`) in `demo.json`; it makes
-no live calls. Re-record it when the engine's answers change, and keep the chip
-headlines in `index.html` in step with the numbers.
+and pricing: change them together. The hero's demo asks dOd's live demo workspace
+(`https://workspace.d0d.ai/try`) when it answers, and otherwise replays the
+answers recorded in `demo.json` (it says "Live" or "Replay"). Re-record it when
+the engine's answers change, from a notebook running the sample with a model:
+
+    dod-notebook -demo -public -addr localhost:8080 &
+    grep -o 'data-q="[^"]*"' index.html | cut -d'"' -f2 | dod-cloud -record-demo http://localhost:8080 > demo.json
+
+A recording carries each answer's proof (the row under the read-back) and, for
+the ambiguous question, its meanings; the ambiguous chip shows only when the
+demo can answer it. Keep the chip headlines in `index.html` in step with the
+numbers.
 
 The earlier product site (agents at engine speed) is on the `full-site`
 branch; the stealth holding page is in history before this one.

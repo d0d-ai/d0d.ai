@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>dOd — Ask your data. Every answer says what it counted.</title>
-<meta name="description" content="Ask your data in plain English. The AI writes the plan, code checks it, dOd's engine counts the rows. Under every answer is one sentence saying exactly what was counted, so a wrong number is seen, not trusted. No SQL, no AI token charges on your data.">
+<title>dOd — Verified answers from real data, for AI agents and data teams</title>
+<meta name="description" content="dOd turns each question into a checked plan, runs it across the files, databases and cloud data you already have, and shows exactly how the answer was produced. For AI agents over MCP, and the data teams behind them.">
 <link rel="canonical" href="https://d0d.ai/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="dOd">
 <meta property="og:url" content="https://d0d.ai/">
-<meta property="og:title" content="dOd — Ask your data. Every answer says what it counted.">
+<meta property="og:title" content="dOd — Give your agents verified answers from real data">
 <meta property="og:description" content="The AI writes the plan, code checks it, the engine counts your rows. One sentence under every answer says what was counted. No SQL, no guessing.">
 <meta property="og:image" content="https://d0d.ai/og.png?v=2">
 <meta property="og:image:width" content="1200">
@@ -17,7 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://d0d.ai/og.png?v=2">
 <meta name="color-scheme" content="dark">
-<meta name="twitter:title" content="dOd — Ask your data. Every answer says what it counted.">
+<meta name="twitter:title" content="dOd — Give your agents verified answers from real data">
 <meta name="twitter:description" content="The AI writes the plan, code checks it, the engine counts your rows. One sentence under every answer says what was counted. No SQL, no AI token charges on your data.">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -181,8 +181,10 @@
   .cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
   .cta-row .or { color: var(--soft); text-decoration: none; border-bottom: 1px solid var(--line); }
   .cta-row .or:hover { color: var(--fg); border-color: var(--accent); }
-  .fine { color: var(--muted); font-size: 14px; margin-top: 18px; }
-  .fine span + span::before { content: " · "; }
+  .facts { list-style: none; padding: 0; margin: 28px 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 20px; max-width: 36em; }
+  @media (max-width: 520px) { .facts { grid-template-columns: minmax(0, 1fr); } }
+  .facts li { color: var(--soft); font-size: 14px; line-height: 1.45; border-left: 2px solid var(--line); padding-left: 12px; }
+  .facts b { display: block; color: var(--muted); font: 500 11.5px "JetBrains Mono", monospace; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 2px; }
 
   /* the live demo */
   .demo { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,.45); }
@@ -240,6 +242,21 @@
   .linechart .ln { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
   .linechart .tk { fill: var(--muted); font: 11px "JetBrains Mono", monospace; }
   .big { font: 700 64px/1 "Space Grotesk", system-ui, sans-serif; background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .proof { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: -6px 0 16px; font-size: 12.5px; color: var(--muted); }
+  .proof span { min-width: 0; overflow-wrap: anywhere; }
+  .proof b { color: var(--soft); font-weight: 600; }
+  .proof .ok { color: var(--good); font-weight: 600; cursor: help; }
+  .proof .part { color: var(--warn); font-weight: 600; cursor: help; }
+  .meanings { display: grid; gap: 8px; margin-top: 12px; }
+  .meanings button { text-align: left; background: var(--panel-2); color: var(--fg); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; cursor: pointer; font: 15px "IBM Plex Sans", system-ui, sans-serif; }
+  .meanings button:hover { border-color: var(--accent); }
+  .meanings button b { display: block; font-weight: 600; }
+  .meanings button span { color: var(--muted); font-size: 13px; }
+  .asked { color: var(--muted); font-size: 13px; margin: 4px 0 -4px; }
+  .chips button[hidden] { display: none; }
+  .chips button.vague { border-style: dashed; }
+  .chips button.vague b { color: var(--warn); }
+  .ask button { background: var(--accent); color: var(--bg); border: 0; border-radius: 9px; padding: 8px 14px; font: 600 14px "Space Grotesk", system-ui, sans-serif; cursor: pointer; }
   .demo-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 14px 18px;
                border-top: 1px solid var(--line); background: var(--panel-2); font-size: 14px; color: var(--soft); }
 
@@ -254,6 +271,7 @@
   .card h3 { font: 700 21px "Space Grotesk", system-ui, sans-serif; margin: 6px 0 8px; }
   .card p { color: var(--soft); margin: 0; }
   .step { font: 600 14px "JetBrains Mono", monospace; color: var(--accent); }
+  .card .more { display: inline-block; margin-top: 14px; font-weight: 600; text-decoration: none; }
   .qs { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 8px; }
   .qs li { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; color: var(--fg); font-size: 15px; }
   .qs li::before { content: "“"; color: var(--accent); }
@@ -265,6 +283,8 @@
   .logos .pill { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--line); border-radius: 999px; padding: 6px 13px; color: var(--soft); font-size: 14px; }
   .logos .pill img, .logos .pill svg { width: 16px; height: 16px; flex: none; }
   .logos .pill.more { border-style: dashed; color: var(--muted); }
+  .logos .pill.dim { border-style: dashed; color: var(--muted); opacity: .75; }
+  .logos .pill.dim img { filter: grayscale(1); opacity: .7; }
   .logos .pill.hl { color: var(--fg); border-color: var(--accent); }
   /* the zeros: what dOd doesn't need */
   .zeros { padding: 64px 0; }
@@ -377,45 +397,53 @@
 <main>
   <div class="wrap hero">
     <div>
-      <div class="eyebrow">Live now · every answer shows its work</div>
-      <h1>Ask your data. <span>Every answer says exactly what it counted.</span></h1>
-      <p class="lede">Ask in plain English, from a spreadsheet to a warehouse. The AI only writes the plan; code checks it against your question, and dOd's engine counts the rows. So a number is always computed from your data, never written by a model, and the sentence under it says what was counted. A wrong reading is seen, not trusted.</p>
+      <div class="eyebrow">Verified analytics for AI agents and data teams</div>
+      <h1>Give your agents <span>verified answers from real data</span></h1>
+      <p class="lede">dOd turns each question into a checked plan, runs it across the files, databases, and cloud data you already have, and shows exactly how the answer was produced.</p>
       <div class="cta-row">
-        <a class="btn" href="https://workspace.d0d.ai/">Try it free — no card</a>
-        <a class="or" href="#demo">or watch the demo →</a>
+        <a class="btn" href="#demo" data-intent="demo" id="try-demo">Try the live demo</a>
+        <a class="btn ghost" href="https://workspace.d0d.ai/" data-intent="signup">Connect your data free</a>
+        <a class="or" href="#ai" data-intent="mcp">View MCP integration →</a>
       </div>
-      <div class="fine"><span>One sentence under every answer</span><span>Same answer every refresh</span><span>No SQL</span><span>Works on TBs of data</span><span>Set up in two minutes</span></div>
+      <ul class="facts" aria-label="At a glance">
+        <li><b>Who it's for</b>Data and AI teams wiring agents to company data</li>
+        <li><b>How you check it</b>Every answer shows its read-back, sources, filters and run</li>
+        <li><b>What it reads</b>PostgreSQL, MySQL, BigQuery, S3, GCS, Google Sheets and files, where they are</li>
+        <li><b>Where it runs</b>Hosted by us, or in your own cloud</li>
+      </ul>
     </div>
 
     <div class="demo" id="demo" aria-label="Demo: questions asked of a sample coffee-gear store">
-      <div class="demo-top"><span class="live">Demo</span><span class="what">Kettle &amp; Co, a sample store · 630K rows · 5 tables</span></div>
+      <div class="demo-top"><span class="live" id="mode">Demo</span><span class="what">Kettle &amp; Co, a sample store · 5 tables</span></div>
       <div class="demo-body">
         <form class="ask" id="ask" autocomplete="off">
-          <input id="q" readonly placeholder="Pick a question below" aria-label="The question asked">
+          <input id="q" readonly placeholder="Pick a question below" aria-label="The question asked" maxlength="200">
+          <button type="submit" id="go" hidden>Ask</button>
         </form>
         <div class="chips" aria-label="Questions to try">
           <button type="button" class="found" data-q="How is revenue trending month by month?"><b>Revenue down 12% in Sep 2026</b><span>How is revenue trending month by month?</span></button>
-          <button type="button" class="found" data-q="Which device brings the most revenue?"><b>Mobile brings 55% of revenue</b><span>Which device brings the most revenue?</span></button>
-          <button type="button" class="found" data-q="Which city brings the most revenue?"><b>New York brings 15% of revenue</b><span>Which city brings the most revenue?</span></button>
           <button type="button" class="found" data-q="Which city has the highest share of refunded orders?"><b>4% of orders are refunded</b><span>Which city has the highest share of refunded orders?</span></button>
           <button type="button" class="found" data-q="How many customers came back more than once?"><b>31,433 customers came back</b><span>How many customers came back more than once?</span></button>
+          <button type="button" class="found vague" data-q="What is our best product?" data-ambiguous hidden><b>Ambiguous on purpose</b><span>What is our best product?</span></button>
         </div>
         <div class="answer" id="answer" aria-live="polite"></div>
       </div>
-      <div class="demo-foot"><span>Answers dOd gave on three years of a made-up store: orders, items, customers, products, ad spend. Ask your own in a free workspace — it takes two minutes to connect.</span></div>
+      <div class="demo-foot"><span id="foot">Three years of a made-up store: orders, items, customers, products, ad spend.</span><a class="btn small" href="https://workspace.d0d.ai/" data-intent="signup_demo" id="own">Run this on your data</a></div>
     </div>
   </div>
 
   <div class="logos">
     <div class="wrap">
-      <span class="label">Data sources</span>
-      <span class="pill"><img src="/icons/googlesheets.svg" alt="">Google Sheets</span><span class="pill"><img src="/icons/postgresql.svg" alt="">PostgreSQL</span><span class="pill"><img src="/icons/googlebigquery.svg" alt="">BigQuery</span>
+      <span class="label">Connects today</span>
+      <span class="pill"><img src="/icons/googlesheets.svg" alt="">Google Sheets</span><span class="pill"><img src="/icons/postgresql.svg" alt="">PostgreSQL</span><span class="pill"><img src="/icons/mysql.svg" alt="">MySQL</span><span class="pill"><img src="/icons/googlebigquery.svg" alt="">BigQuery</span>
       <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5l2 14c.3 1.7 2.9 3 6 3s5.7-1.3 6-3l2-14"/></svg>Amazon S3</span><span class="pill"><img src="/icons/googlecloudstorage.svg" alt="">Google Cloud Storage</span><span class="pill"><img src="/icons/apache.svg" alt="">Apache Iceberg</span>
       <span class="pill"><img src="/icons/apacheparquet.svg" alt="">CSV &amp; Parquet uploads</span>
-      <span class="pill"><img src="/icons/snowflake.svg" alt="">Snowflake</span><span class="pill"><img src="/icons/databricks.svg" alt="">Databricks</span><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5l2 14c.3 1.7 2.9 3 6 3s5.7-1.3 6-3l2-14"/></svg>Amazon Redshift</span><span class="pill"><img src="/icons/clickhouse.svg" alt="">ClickHouse</span>
-      <span class="pill"><img src="/icons/mysql.svg" alt="">MySQL</span><span class="pill"><img src="/icons/mongodb.svg" alt="">MongoDB</span><span class="pill"><img src="/icons/elasticsearch.svg" alt="">Elasticsearch</span><span class="pill"><img src="/icons/duckdb.svg" alt="">DuckDB</span>
-      <span class="pill"><img src="/icons/apachekafka.svg" alt="">Apache Kafka</span><span class="pill"><img src="/icons/apachespark.svg" alt="">Apache Spark</span><span class="pill"><img src="/icons/trino.svg" alt="">Trino</span><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5l2 14c.3 1.7 2.9 3 6 3s5.7-1.3 6-3l2-14"/></svg>Delta Lake</span><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5l2 14c.3 1.7 2.9 3 6 3s5.7-1.3 6-3l2-14"/></svg>Azure Data Lake</span>
-      <span class="pill more">+ many more</span>
+    </div>
+    <div class="wrap soon" style="margin-top:14px">
+      <span class="label">Not yet — tell us</span>
+      <span class="pill dim"><img src="/icons/snowflake.svg" alt="">Snowflake</span><span class="pill dim"><img src="/icons/databricks.svg" alt="">Databricks</span><span class="pill dim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5l2 14c.3 1.7 2.9 3 6 3s5.7-1.3 6-3l2-14"/></svg>Amazon Redshift</span><span class="pill dim"><img src="/icons/clickhouse.svg" alt="">ClickHouse</span>
+      <span class="pill dim"><img src="/icons/mongodb.svg" alt="">MongoDB</span><span class="pill dim"><img src="/icons/elasticsearch.svg" alt="">Elasticsearch</span><span class="pill dim"><img src="/icons/duckdb.svg" alt="">DuckDB</span>
+      <span class="pill dim"><img src="/icons/apachekafka.svg" alt="">Apache Kafka</span><span class="pill dim"><img src="/icons/apachespark.svg" alt="">Apache Spark</span><span class="pill dim"><img src="/icons/trino.svg" alt="">Trino</span><span class="pill dim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5l2 14c.3 1.7 2.9 3 6 3s5.7-1.3 6-3l2-14"/></svg>Delta Lake</span><span class="pill dim"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5l2 14c.3 1.7 2.9 3 6 3s5.7-1.3 6-3l2-14"/></svg>Azure Data Lake</span>
     </div>
     <div class="wrap" style="margin-top:14px">
       <span class="label">Agents</span>
@@ -431,8 +459,8 @@
       <p class="sub">The AI only plans the question. The work — reading, joining and adding up every row — is done by dOd's map-reduce engine.</p>
       <div class="zgrid">
         <div class="zero"><div class="n">0</div><h3>GPUs</h3><p>Terabytes are crunched on ordinary CPUs. No GPU cluster to rent, no model to host.</p></div>
-        <div class="zero"><div class="n">0</div><h3>rows sent to an AI</h3><p>Your tables never pass through a language model. Only the short answer goes back to your agent.</p></div>
-        <div class="zero"><div class="n">0</div><h3>AI token charges</h3><p>Read a kilobyte or a terabyte: no tokens are spent on your data. You pay for infrastructure, never per token.</p></div>
+        <div class="zero"><div class="n">0</div><h3>rows a model adds up</h3><p>The engine reads and counts every row; the model only reads the question into a plan. A plan with a model step, like summarizing text, says so under its answer.</p></div>
+        <div class="zero"><div class="n">0</div><h3>per-token AI charges</h3><p>Read a kilobyte or a terabyte: you pay for the compute time a question runs, never per token. Adding up the rows is the engine's work, not a model's.</p></div>
         <div class="zero"><div class="n">0</div><h3>lines of SQL</h3><p>Agents and people ask in plain English; dOd writes the exact plan and shows how it got the answer.</p></div>
       </div>
     </div>
@@ -461,8 +489,8 @@
       <div>
         <div class="kicker">For agents</div>
         <h2>Your agents don't need SQL. They need English.</h2>
-        <p class="sub">Connect any agent to dOd once. It asks in plain English, and dOd's embedded map-reduce model builder compiles the question straight into an exact plan — no text-to-SQL translation, no guessed joins — then runs it across terabytes of data. Only the short answer goes back to the agent.</p>
-        <p class="sub">Your data never runs through a language model, so crunching terabytes costs zero AI tokens. You pay for infrastructure, never per token.</p>
+        <p class="sub">Connect any agent to dOd once. It asks in plain English, and dOd's embedded map-reduce model builder compiles the question straight into an exact plan — no text-to-SQL translation, no guessed joins — then runs it across terabytes of data. The agent gets the answer, not the table.</p>
+        <p class="sub">The model plans; the engine counts. Crunching terabytes spends no AI tokens on the rows, so you pay for infrastructure, never per token. Answers come back to the agent capped in size, with their proof beside them.</p>
       </div>
       <div class="chatlike" aria-label="Example agent conversation">
         <div class="kicker" style="font-size:11px;color:var(--muted)">Example</div>
@@ -510,22 +538,25 @@
             <span><img src="/icons/googlebigquery.svg" alt="">BigQuery</span>
             <span><img src="/icons/postgresql.svg" alt="">PostgreSQL</span>
           </div>
-          <p>Nothing is copied or exported, and no rows are ever sent to a language model.</p>
+          <p>Read in place: nothing exported to another warehouse first, and no rows handed to a language model to add up.</p>
         </div>
       </div>
-      <div class="back"><b>← only the answer goes back</b><span>Brazil +41%, India +33%, Poland +27%</span><small>3.8B events · 2.1 TB read · 0 rows to the AI · 0 tokens on the data</small></div>
+      <div class="back"><b>← the answer goes back, with its proof</b><span>Brazil +41%, India +33%, Poland +27%</span><small>3.8B events · 2.1 TB read · counted by the engine</small></div>
     </div>
   </section>
 
   <section id="how">
     <div class="wrap">
-      <div class="kicker">How it works</div>
-      <h2>From question to chart in three steps.</h2>
-      <p class="sub">No setup project, no data team, no dashboards to build first. Connect what you already use and start asking.</p>
+      <div class="kicker">Why dOd</div>
+      <h2>Connect, ask, verify, reuse.</h2>
+      <p class="sub">One loop, on the data you already have. Each answer is a plan you can check, keep and hand to an agent.</p>
       <div class="cards">
-        <div class="card"><div class="step">01 · Connect</div><h3>Point it at your data</h3><p>Sign in with Google and pick a spreadsheet, paste a database link, or drop in a file. dOd reads your data where it lives — nothing to export.</p></div>
-        <div class="card"><div class="step">02 · Ask</div><h3>Ask like you'd ask a colleague</h3><p>“Which products sold best last month?” dOd plans the question, runs it over all your data, and answers with a chart and a one-line summary.</p></div>
-        <div class="card"><div class="step">03 · Keep &amp; share</div><h3>Keep what matters</h3><p>Pin answers to a dashboard, or set a watch that tells you when a number moves and names what drove it. Both re-run the saved plan with no AI involved: the same answer every refresh, and nothing spent from your allowance. Invite your team, or share any chart as a card in Slack, email or LinkedIn.</p></div>
+        <div class="card"><div class="step">01 · Connect without migrating</div><h3>Point it at what you have</h3><p>PostgreSQL, BigQuery, files, S3 and Google Cloud Storage, Google Sheets. dOd reads them where they are: nothing to load into a new warehouse first. Use a read-only login for databases.</p>
+          <a class="more" href="https://workspace.d0d.ai/" data-intent="signup">Connect a source →</a></div>
+        <div class="card"><div class="step">02 · Ask safely</div><h3>A typed plan, checked before it runs</h3><p>The model reads your question into a plan of dOd's own operators. Code checks it against the tables' columns and types before a row is read, then dOd's engine runs it. No arbitrary Python, no SQL handed to a model to write.</p>
+          <a class="more" href="#demo" data-intent="demo">Ask the demo →</a></div>
+        <div class="card"><div class="step">03 · Verify and reuse</div><h3>Proof under every answer</h3><p>Each answer shows what it counted, from which source, under which filters and definitions. Confirm it once and the same question is answered the same way; keep it on a board, set an alert, or call it from an agent over MCP.</p>
+          <a class="more" href="#ai" data-intent="mcp">Connect an agent →</a></div>
       </div>
     </div>
   </section>
@@ -621,10 +652,21 @@
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
 
-// The demo replays answers dOd gave on a sample store — Kettle & Co, five
-// tables — recorded in demo.json, so it never waits on a live workspace.
+// The demo asks dOd's live demo workspace (workspace.d0d.ai/try) when it is
+// on, and otherwise replays answers dOd gave on the same sample store —
+// Kettle & Co, five tables — recorded in demo.json (dod-cloud -record-demo).
+// Either way the answer is dOd's own: the number, the sentence under it
+// saying what was counted, and the proof row of what it read.
+window.siteTrack ||= (...a) => (window.siteQ ||= []).push(a);
 (() => {
+  const LIVE = "https://workspace.d0d.ai";
   const recorded = fetch("demo.json").then(r => r.json());
+  // Live if the demo workspace answers in a moment; a page never waits on it.
+  const live = Promise.race([
+    fetch(LIVE + "/try/findings", {mode: "cors"}).then(r => r.ok).catch(() => false),
+    new Promise(r => setTimeout(() => r(false), 2500)),
+  ]);
+  const track = (e, p) => window.siteTrack(e, p);
   const form = document.getElementById("ask"), input = document.getElementById("q"), box = document.getElementById("answer");
   const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const wait = ms => new Promise(r => setTimeout(r, still ? 0 : ms));
@@ -719,6 +761,49 @@ document.getElementById("year").textContent = new Date().getFullYear();
     return d;
   }
 
+  // proofRow is what the answer stands on, from its proof (dOd's proof.go):
+  // whether the plan checked out, what it read and kept, how fresh, how long.
+  function proofRow(pr, ms) {
+    const row = el("div", "proof"), item = (label, value, title) => {
+      const e = el("span"); e.append(el("b", "", label + " "), document.createTextNode(value));
+      if (title) e.title = title;
+      row.append(e);
+    };
+    if (pr.status === "verified") {
+      const ok = el("span", "ok", "✓ Plan checked");
+      ok.title = "Checked against the tables' columns and types before a row was read, then run by the engine. It shows the question was read as the line above says — not that it is what you meant.";
+      row.append(ok);
+    } else if (pr.status === "partial") {
+      const w = el("span", "part", "Part of the data"); w.title = (pr.warnings || [])[0] || ""; row.append(w);
+    }
+    const src = (pr.sources || []).map(x => x.alias || x.path.replace(/^\w+:\/\//, ""));
+    if (src.length) item(src.length > 1 ? "Sources" : "Source", src.join(" + "));
+    item("Filters", (pr.filters || []).join(", ") || "none — every row");
+    item("Freshness", pr.freshness?.status === "fresh" ? "current" : "not reported by this source", "The sample is a fixed made-up store; a live source says when it last changed where it can.");
+    const ex = pr.execution || {}, took = ms ?? ((ex.planning_ms || 0) + (ex.execution_ms || 0));
+    const ran = [];
+    if (took) ran.push(took < 1000 ? took + " ms" : (took / 1000).toFixed(1) + " s");
+    if (ex.read_bytes) ran.push(new Intl.NumberFormat(undefined, {notation: "compact", maximumFractionDigits: 1}).format(ex.read_bytes) + "B read");
+    if (ran.length) item("Ran", ran.join(" · "));
+    return row;
+  }
+
+  // meanings is a question dOd would not guess at: each reading it can run,
+  // said in words, for the visitor to pick.
+  function meanings(res) {
+    box.append(el("div", "head", "Which did you mean?"));
+    if (res.why_ask) box.append(el("div", "how", res.why_ask));
+    else box.append(el("div", "how", "This could mean more than one thing. dOd asks rather than guess."));
+    const list = el("div", "meanings");
+    res.options.forEach((o, i) => {
+      const b = el("button"); b.type = "button";
+      b.append(el("b", "", o.label || o.readback)); if (o.label && o.readback) b.append(el("span", "", o.readback));
+      b.onclick = () => pick(res.question, i, o.label || o.readback);
+      list.append(b);
+    });
+    box.append(list);
+  }
+
   function render(res) {
     box.replaceChildren();
     const q = el("div", "q");
@@ -726,6 +811,8 @@ document.getElementById("year").textContent = new Date().getFullYear();
 
     box.append(q);
     if (res.error) { box.append(el("div", "note", res.error)); return; }
+    if (res.options?.length && !res.result) { meanings(res); return; }
+    if (res.asked_as) box.append(el("div", "asked", "Answered as: " + res.asked_as));
     const r = res.result || {}, rows = r.rows || [], {pairs, pct, ratio} = pairsOf(r), head = el("div", "head");
     const b = text => Object.assign(el("b"), {textContent: text});
     const named = pct && !ratio && pairs.find(p => new RegExp("\\b" + p.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\b", "i").test(res.question));
@@ -755,6 +842,7 @@ document.getElementById("year").textContent = new Date().getFullYear();
       const how = el("div", "how");
       how.append(el("b", "", "Counted as: "), document.createTextNode(res.readback));
       head.after(how);
+      if (res.proof) how.after(proofRow(res.proof, res.ms));
     }
     if (rows.length) box.append(rowsBehind(rows, r.columns));
     // A change over time: dOd can say what drove it, computed, not guessed.
@@ -773,7 +861,7 @@ document.getElementById("year").textContent = new Date().getFullYear();
     btn.disabled = true; btn.textContent = "Comparing every country, category and channel…";
     let res;
     await wait(900);
-    try { res = (await recorded).why[question] || {}; } catch { res = {error: "The demo didn't load — refresh the page."}; }
+    try { res = await answerOf({question, why: true}) || {}; } catch { res = {error: "The demo didn't load — refresh the page."}; }
     const w = el("div", "why");
     if (res.error || !res.headline) { w.append(el("div", "note", res.error || "Nothing to explain there.")); btn.replaceWith(w); return; }
     const [head, sub] = res.headline.split("\n").map(months), wh = el("div", "wh", head);
@@ -789,25 +877,77 @@ document.getElementById("year").textContent = new Date().getFullYear();
     btn.replaceWith(w);
   }
 
-  let busy = false;
-  async function ask(question, typed) {
-    question = question.trim();
-    if (!question || busy) return;
+  // answerOf is one answer: from the live demo when it is on, else as
+  // recorded. body is what /try takes: {question, why?, pick?}.
+  let isLive = false;
+  async function answerOf(body) {
+    const rec = await recorded.catch(() => ({})), q = body.question;
+    if (isLive) {
+      // Live, unless it is busy, asleep or out of today's questions: then the
+      // recorded answer, where there is one, beats an error.
+      let r, d;
+      try { r = await fetch(LIVE + "/try", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)}); d = await r.json(); } catch {}
+      const kept = body.why ? rec.why?.[q] : body.pick != null ? rec.picks?.[q]?.[body.pick] : rec.answers?.[q];
+      if (r?.ok && d) return d;
+      if (kept) return {...kept};
+      return d?.error ? d : {error: "The demo is warming up — try again in a few seconds."};
+    }
+    if (body.why) return rec.why?.[q];
+    if (body.pick != null) return rec.picks?.[q]?.[body.pick];
+    const a = rec.answers?.[q];
+    return a ? {...a} : {error: "The recorded demo answers the questions below. Sign in free to ask anything."};
+  }
+
+  let busy = false, answered = 0;
+  async function show(body, label, how) {
     busy = true;
-    if (typed && !still) { input.value = ""; for (const ch of question) { input.value += ch; await wait(28); } }
-    else input.value = question;
-    box.replaceChildren(el("div", "wait", "Reading 964,000 orders…"));
-    await wait(700);
+    box.replaceChildren(el("div", "wait", isLive ? "Planning, checking, then reading the orders…" : "Reading the orders…"));
+    if (!isLive) await wait(700);
     let res;
-    try { res = {...(await recorded).answers[question]}; } catch { res = {error: "The demo didn't load — refresh the page."}; }
-    res.question = question;
+    try { res = await answerOf(body) || {error: "Nothing came back — try again."}; } catch { res = {error: "The demo didn't load — refresh the page."}; }
+    res.question = label;
     render(res);
     busy = false;
+    const status = res.error ? "error" : res.options?.length && !res.result ? "asked_back" : res.proof?.status || "answered";
+    track("demo_answer", {mode: isLive ? "live" : "replay", how, status});
+    if (!res.error && !(res.options?.length && !res.result) && ++answered === 1) own.classList.remove("ghost");
   }
-  form.addEventListener("submit", e => e.preventDefault());
+  async function ask(question, typed, how = "chip") {
+    question = question.trim();
+    if (!question || busy) return;
+    if (typed && !still) { busy = true; input.value = ""; for (const ch of question) { input.value += ch; await wait(28); } busy = false; }
+    else input.value = question;
+    track("demo_question", {mode: isLive ? "live" : "replay", how});
+    await show({question}, question, how);
+  }
+  function pick(question, i, label) {
+    if (busy) return;
+    track("demo_question", {mode: isLive ? "live" : "replay", how: "meaning"});
+    show({question, pick: i}, question, "meaning").then(() => {
+      const a = box.querySelector(".asked"); if (!a) box.querySelector(".q")?.after(el("div", "asked", "Answered as: " + label));
+    });
+  }
+  const own = document.getElementById("own"), mode = document.getElementById("mode"), foot = document.getElementById("foot");
+  own.classList.add("ghost");
+  form.addEventListener("submit", e => { e.preventDefault(); if (isLive) ask(input.value, false, "typed"); });
   const chips = document.querySelector(".chips");
   const wire = () => chips.querySelectorAll("button").forEach(btn => btn.onclick = () => ask(btn.dataset.q || btn.textContent));
   wire();
+  // The ambiguous question shows when it can be answered as asked: live,
+  // or recorded with its meanings.
+  const vague = chips.querySelector("[data-ambiguous]");
+  live.then(on => { isLive = on; }); // first: the first answer must not wait on the recording
+  Promise.all([live, recorded.catch(() => ({}))]).then(([on, rec]) => {
+    if (on) {
+      input.readOnly = false; input.placeholder = "Ask the sample store anything"; document.getElementById("go").hidden = false;
+      mode.textContent = "Live";
+    } else {
+      mode.textContent = "Replay";
+      document.getElementById("try-demo").textContent = "Try the demo"; // not live: say so
+      if (rec.recorded) foot.textContent = `Answers dOd gave on ${new Date(rec.recorded + "T00:00:00Z").toLocaleDateString(undefined, {month: "short", day: "numeric", year: "numeric", timeZone: "UTC"})}, replayed — on three years of a made-up store.`;
+    }
+    vague.hidden = !(on || rec.answers?.[vague.dataset.q]?.options?.length);
+  });
 
   // The first answer asks itself, once the demo is on screen: a visitor sees
   // dOd work before deciding to type anything.
@@ -815,10 +955,10 @@ document.getElementById("year").textContent = new Date().getFullYear();
     if (!seen.some(s => s.isIntersecting)) return;
     obs.disconnect();
     // A change over time first: its answer can say why.
-    setTimeout(() => {
+    live.then(() => setTimeout(() => {
       const all = [...chips.querySelectorAll("button")], b = all.find(x => /trend|month/i.test(x.dataset.q || x.textContent)) || all[0];
-      ask(b.dataset.q || b.textContent, true);
-    }, 500);
+      ask(b.dataset.q || b.textContent, true, "auto");
+    }, 500));
   }, {threshold: .4}).observe(box);
 })();
 </script>

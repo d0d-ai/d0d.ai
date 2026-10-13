@@ -1,13 +1,14 @@
 # dOd
 
-> dOd answers questions about your data in plain English, and every answer says exactly what it counted. The AI only writes the plan; code checks it against the question, and dOd's map-reduce engine counts the rows where they live, even terabytes. A number is always computed from the data, never written by a model. People ask in the workspace; Claude, ChatGPT or your own agents connect once over MCP and ask the same way.
+> dOd gives AI agents and data teams verified answers from real data. It turns each question into a checked plan, runs it across the files, databases and cloud data you already have, and shows exactly how the answer was produced. The model reads the question into a plan of dOd's own operators; code checks it against the tables' columns and types before it runs; dOd's map-reduce engine counts the rows where they live, even terabytes. Claude, ChatGPT or your own agents connect once over MCP; people ask in the workspace.
 
-- Every answer shows its work: one sentence, written by code, says the table, filters and sum that were counted. When two numbers disagree, the difference is in that sentence.
+- Every answer shows its proof: one sentence, written by code, says the table, filters and sum that were counted, beside the sources, how fresh they are, and what running it took. When two numbers disagree, the difference is in that sentence.
+- A question that could mean two things is asked back, with each meaning in words, rather than guessed.
 - Dashboards and watches re-run the saved plan with no AI involved: the same answer every refresh, nothing spent from the AI allowance.
 - No SQL: questions are compiled into exact plans, with no text-to-SQL translation and no guessed joins.
 - No GPUs: the data is processed by a map-reduce engine on ordinary CPUs.
-- No rows sent to an AI: the language model only plans the question; tables never pass through it, so there are no AI token charges on the data.
-- Connects to Google Sheets, PostgreSQL, BigQuery, Amazon S3, Google Cloud Storage, Apache Iceberg, and CSV or Parquet uploads.
+- The engine adds up the rows, not a model: the language model plans the question, so there are no AI token charges on the data. A plan with a model step (such as summarizing text) says so under its answer.
+- Connects to Google Sheets, PostgreSQL, MySQL, BigQuery, Amazon S3, Google Cloud Storage, Apache Iceberg, and CSV or Parquet uploads. Hosted, or in your own cloud.
 - Works with ChatGPT and Claude, and any agent, over MCP.
 - Dashboards that stay up to date, team sharing, and charts shared as cards.
 
