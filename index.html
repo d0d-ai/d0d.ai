@@ -3,22 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>dOd — The big data platform for AI agents</title>
-<meta name="description" content="Connect your agents to terabytes of data. They ask in plain English; dOd's built-in map-reduce model builder turns it into an exact plan and runs it over all your data. No SQL, no translation, no guessing.">
+<title>dOd — Ask your data. Every answer says what it counted.</title>
+<meta name="description" content="Ask your data in plain English. The AI writes the plan, code checks it, dOd's engine counts the rows. Under every answer is one sentence saying exactly what was counted, so a wrong number is seen, not trusted. No SQL, no AI token charges on your data.">
 <link rel="canonical" href="https://d0d.ai/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="dOd">
 <meta property="og:url" content="https://d0d.ai/">
-<meta property="og:title" content="dOd — The big data platform for AI agents">
-<meta property="og:description" content="Your agents speak English. dOd turns it into exact answers over terabytes of data. No SQL, no translation, no guessing.">
+<meta property="og:title" content="dOd — Ask your data. Every answer says what it counted.">
+<meta property="og:description" content="The AI writes the plan, code checks it, the engine counts your rows. One sentence under every answer says what was counted. No SQL, no guessing.">
 <meta property="og:image" content="https://d0d.ai/og.png?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://d0d.ai/og.png?v=2">
 <meta name="color-scheme" content="dark">
-<meta name="twitter:title" content="dOd — The big data platform for AI agents">
-<meta name="twitter:description" content="Your agents speak English. dOd turns it into exact answers over terabytes of data. No SQL, no GPUs, no AI token charges on your data.">
+<meta name="twitter:title" content="dOd — Ask your data. Every answer says what it counted.">
+<meta name="twitter:description" content="The AI writes the plan, code checks it, the engine counts your rows. One sentence under every answer says what was counted. No SQL, no AI token charges on your data.">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
@@ -50,7 +50,7 @@
    "url": "https://d0d.ai/",
    "applicationCategory": "BusinessApplication",
    "operatingSystem": "Web",
-   "description": "The big data platform for AI agents. Claude, ChatGPT or your own agents ask in plain English; dOd turns the question into an exact map-reduce plan and runs it over terabytes. No SQL, no GPUs, no AI token charges on your data.",
+   "description": "Ask your data in plain English, from a spreadsheet to a warehouse. The AI writes the plan, code checks it against the question, and dOd's map-reduce engine counts the rows. Every answer carries one sentence saying exactly what was counted. No SQL, no GPUs, no AI token charges on your data.",
    "publisher": {
     "@id": "https://d0d.ai/#org"
    },
@@ -219,7 +219,14 @@
   .answer .fast { color: var(--good); font: 600 13px "JetBrains Mono", monospace; }
   .answer .head { font: 700 clamp(21px, 2.6vw, 27px)/1.2 "Space Grotesk", system-ui, sans-serif; letter-spacing: -0.01em; margin: 8px 0 16px; }
   .answer .head b { background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .answer .how { color: var(--muted); font-size: 13px; margin-top: 14px; }
+  .answer .how { color: var(--soft); font-size: 14px; line-height: 1.45; margin: -8px 0 16px; padding-left: 12px; border-left: 2px solid var(--accent); }
+  .answer .how b { color: var(--fg); font-weight: 600; }
+  .answer .rows { margin-top: 14px; color: var(--muted); font-size: 13px; border: 0; padding: 0; }
+  .answer .rows summary { cursor: pointer; color: var(--accent); font-size: 14px; font-weight: 600; }
+  .answer .rows table { width: 100%; border-collapse: collapse; margin-top: 8px; font: 12.5px "JetBrains Mono", monospace; }
+  .answer .rows td, .answer .rows th { text-align: left; padding: 4px 8px 4px 0; border-top: 1px solid var(--line); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+  .answer .rows th { color: var(--soft); font-weight: 500; border-top: 0; }
+  .answer .rows td:last-child, .answer .rows th:last-child { text-align: right; }
   .answer .wait { color: var(--muted); font: 500 14px "JetBrains Mono", monospace; display: flex; align-items: center; gap: 10px; padding-top: 6px; }
   .answer .wait::before { content: ""; width: 14px; height: 14px; border: 2px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
@@ -370,14 +377,14 @@
 <main>
   <div class="wrap hero">
     <div>
-      <div class="eyebrow">Live now · built for agents</div>
-      <h1>The big data platform for AI agents. <span>Your agents only need English.</span></h1>
-      <p class="lede">Connect Claude, ChatGPT or your own agents to your data. They ask in plain English; dOd's embedded map-reduce model builder turns the question into an exact plan and runs it over terabytes. No SQL. No translation. No guessing.</p>
+      <div class="eyebrow">Live now · every answer shows its work</div>
+      <h1>Ask your data. <span>Every answer says exactly what it counted.</span></h1>
+      <p class="lede">Ask in plain English, from a spreadsheet to a warehouse. The AI only writes the plan; code checks it against your question, and dOd's engine counts the rows. So a number is always computed from your data, never written by a model, and the sentence under it says what was counted. A wrong reading is seen, not trusted.</p>
       <div class="cta-row">
         <a class="btn" href="https://workspace.d0d.ai/">Try it free — no card</a>
         <a class="or" href="#demo">or watch the demo →</a>
       </div>
-      <div class="fine"><span>Works on TBs of data</span><span>Any agent: Claude, ChatGPT, your own</span><span>Zero AI token charges</span><span>No GPUs</span><span>Set up in two minutes</span></div>
+      <div class="fine"><span>One sentence under every answer</span><span>Same answer every refresh</span><span>No SQL</span><span>Works on TBs of data</span><span>Set up in two minutes</span></div>
     </div>
 
     <div class="demo" id="demo" aria-label="Demo: questions asked of a sample coffee-gear store">
@@ -427,6 +434,24 @@
         <div class="zero"><div class="n">0</div><h3>rows sent to an AI</h3><p>Your tables never pass through a language model. Only the short answer goes back to your agent.</p></div>
         <div class="zero"><div class="n">0</div><h3>AI token charges</h3><p>Read a kilobyte or a terabyte: no tokens are spent on your data. You pay for infrastructure, never per token.</p></div>
         <div class="zero"><div class="n">0</div><h3>lines of SQL</h3><p>Agents and people ask in plain English; dOd writes the exact plan and shows how it got the answer.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="disagree">
+    <div class="wrap split">
+      <div>
+        <div class="kicker">When two numbers disagree</div>
+        <h2>Two people, two revenue figures. Read the sentence under each.</h2>
+        <p class="sub">Every answer carries one sentence, written by code and never by the model, saying exactly what was counted: the table, the filters, the sum. When two numbers don't match, the difference is in that sentence. No SQL to read, no analyst to wait for.</p>
+        <p class="sub">A saved metric fixes what a word means. Define “revenue” once as paid orders only, and every answer that uses it counts that way, and says so.</p>
+      </div>
+      <div class="chatlike" aria-label="Two answers from the demo and what each one counted">
+        <div class="kicker" style="font-size:11px;color:var(--muted)">From the demo store</div>
+        <div class="bubble you">How is revenue trending month by month?</div>
+        <div class="bubble ai">Sep 2026: $865K, down 12% on August.<small>Counted as: from orders, keep rows where status is "paid"; add up total per month; this is the saved metric "revenue".</small></div>
+        <div class="bubble you">Which device brings the most revenue?</div>
+        <div class="bubble ai">Mobile leads with 55% of the total.<small>Counted as: from orders, add up total per device. No "paid" filter here, so refunded orders are in this one. That is the difference, in one line.</small></div>
       </div>
     </div>
   </section>
@@ -500,7 +525,7 @@
       <div class="cards">
         <div class="card"><div class="step">01 · Connect</div><h3>Point it at your data</h3><p>Sign in with Google and pick a spreadsheet, paste a database link, or drop in a file. dOd reads your data where it lives — nothing to export.</p></div>
         <div class="card"><div class="step">02 · Ask</div><h3>Ask like you'd ask a colleague</h3><p>“Which products sold best last month?” dOd plans the question, runs it over all your data, and answers with a chart and a one-line summary.</p></div>
-        <div class="card"><div class="step">03 · Keep &amp; share</div><h3>Keep what matters</h3><p>Pin answers to a dashboard that stays up to date, invite your team, or share any chart as a card in Slack, email or LinkedIn.</p></div>
+        <div class="card"><div class="step">03 · Keep &amp; share</div><h3>Keep what matters</h3><p>Pin answers to a dashboard, or set a watch that tells you when a number moves and names what drove it. Both re-run the saved plan with no AI involved: the same answer every refresh, and nothing spent from your allowance. Invite your team, or share any chart as a card in Slack, email or LinkedIn.</p></div>
       </div>
     </div>
   </section>
@@ -677,6 +702,23 @@ document.getElementById("year").textContent = new Date().getFullYear();
     return svg;
   }
 
+  // The rows a number came from, as the engine returned them.
+  function rowsBehind(rows, columns) {
+    const d = el("details", "rows"), cols = rows[0].fields ? (columns?.length ? columns : Object.keys(rows[0].fields)) : ["", ""];
+    d.append(el("summary", "", `See the ${rows.length} row${rows.length === 1 ? "" : "s"} behind it`));
+    const t = el("table"), hr = el("tr");
+    for (const c of cols) hr.append(el("th", "", c));
+    if (rows[0].fields) t.append(hr);
+    for (const x of rows.slice(0, 12)) {
+      const tr = el("tr");
+      for (const v of x.fields ? cols.map(c => x.fields[c]) : [x.key, x.value]) tr.append(el("td", "", num(v) != null ? fmt(num(v)) : String(v ?? "")));
+      t.append(tr);
+    }
+    d.append(t);
+    if (rows.length > 12) d.append(el("div", "", `… and ${rows.length - 12} more`));
+    return d;
+  }
+
   function render(res) {
     box.replaceChildren();
     const q = el("div", "q");
@@ -684,7 +726,7 @@ document.getElementById("year").textContent = new Date().getFullYear();
 
     box.append(q);
     if (res.error) { box.append(el("div", "note", res.error)); return; }
-    const r = res.result || {}, {pairs, pct, ratio} = pairsOf(r), head = el("div", "head");
+    const r = res.result || {}, rows = r.rows || [], {pairs, pct, ratio} = pairsOf(r), head = el("div", "head");
     const b = text => Object.assign(el("b"), {textContent: text});
     const named = pct && !ratio && pairs.find(p => new RegExp("\\b" + p.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\b", "i").test(res.question));
     if (r.count != null && !pairs.length) {
@@ -707,7 +749,14 @@ document.getElementById("year").textContent = new Date().getFullYear();
     } else {
       box.append(el("div", "note", "Nothing matched that — try one of the questions above."));
     }
-    if (res.readback) box.append(el("div", "how", "How dOd worked it out: " + res.readback));
+    // The proof sits under the number, not under the chart: one sentence,
+    // written by code, saying what was counted.
+    if (res.readback && head.isConnected) {
+      const how = el("div", "how");
+      how.append(el("b", "", "Counted as: "), document.createTextNode(res.readback));
+      head.after(how);
+    }
+    if (rows.length) box.append(rowsBehind(rows, r.columns));
     // A change over time: dOd can say what drove it, computed, not guessed.
     if (res.can_why) {
       const btn = el("button", "why-btn", "Why did it change? →");
